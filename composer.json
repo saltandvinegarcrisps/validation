@@ -17,7 +17,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"Forms": "src/"
+			"Validation": "src/"
 		}
 	},
 	"minimum-stability": "dev"
