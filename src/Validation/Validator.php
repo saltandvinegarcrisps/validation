@@ -1,5 +1,7 @@
 <?php namespace Validation;
 
+use Closure;
+
 class Validator {
 
 	protected $input = array();
@@ -33,9 +35,19 @@ class Validator {
 			$value = $this->input[$field];
 
 			foreach($rules as $rule) {
-				if(false === $rule->isValid($value)) {
-					$this->valid = false;
-					$this->messages[] = sprintf($rule->getMessage(), $field);
+				if($rule instanceof Closure) {
+					list($result, $message) = $rule($value);
+					
+					if(false === $result) {
+						$this->valid = false;
+						$this->messages[] = sprintf($message, $field);
+					}
+				}
+				else {
+					if(false === $rule->isValid($value)) {
+						$this->valid = false;
+						$this->messages[] = sprintf($rule->getMessage(), $field);
+					}
 				}
 			}
 		}
