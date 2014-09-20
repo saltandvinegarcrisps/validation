@@ -40,13 +40,19 @@ class Validator {
 					
 					if(false === $result) {
 						$this->valid = false;
-						$this->messages[] = sprintf($message, $field);
+						
+						if( ! isset($this->messages[$field])) {
+							$this->messages[$field] = sprintf($message, $field);
+						}
 					}
 				}
 				else {
 					if(false === $rule->isValid($value)) {
 						$this->valid = false;
-						$this->messages[] = sprintf($rule->getMessage(), $field);
+						
+						if( ! isset($this->messages[$field])) {
+							$this->messages[$field] = sprintf($rule->getMessage(), $field);
+						}
 					}
 				}
 			}
