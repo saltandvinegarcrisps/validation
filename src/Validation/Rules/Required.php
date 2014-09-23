@@ -1,6 +1,8 @@
 <?php namespace Validation\Rules;
 
-class Required {
+use Validation\Contracts\RuleInterface;
+
+class Required implements RuleInterface {
 
 	public function isValid($value) {
 		return false === empty($value);

@@ -1,6 +1,8 @@
 <?php namespace Validation\Rules;
 
-class Length {
+use Validation\Contracts\RuleInterface;
+
+class Length implements RuleInterface {
 	
 	protected $min;
 	
