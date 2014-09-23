@@ -100,10 +100,10 @@ class Validator {
 
 			foreach($rules as $rule) {
 				if($rule instanceof Closure) {
-					$this->customRule($rule);
+					$this->customRule($rule, $field, $value);
 				}
 				else if($rule instanceof RuleInterface) {
-					$this->validateRule($rule);
+					$this->validateRule($rule, $field, $value);
 				}
 			}
 		}
@@ -114,7 +114,7 @@ class Validator {
 	 * 
 	 * @param object
 	 */
-	protected function validateRule(RuleInterface $rule) {
+	protected function validateRule(RuleInterface $rule, $field, $value) {
 		if(false === $rule->isValid($value)) {
 			$this->valid = false;
 
@@ -127,7 +127,7 @@ class Validator {
 	 * 
 	 * @param object
 	 */
-	protected function validateCustomRule(Closure $rule) {
+	protected function validateCustomRule(Closure $rule, $field, $value) {
 		list($result, $message) = $rule($value);
 		
 		if(false === $result) {
