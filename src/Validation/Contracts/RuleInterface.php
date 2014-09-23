@@ -1,9 +1,9 @@
 <?php namespace Validation\Contracts;
 
 interface RuleInterface {
-    
-    public function isValid();
-    
-    public function getMessage();
-    
+	
+	public function isValid($value);
+	
+	public function getMessage();
+	
 }
