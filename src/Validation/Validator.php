@@ -66,6 +66,16 @@ class Validator {
 			}
 		}
 	}
+	
+	/**
+	 * Set the validator as invalid with a message as a reason
+	 * 
+	 * @param string
+	 */
+	public function setInvalid($reason) {
+		$this->valid = false;
+		$this->addMessage($reason);
+	}
 
 	/**
 	 * Add a custom rule
