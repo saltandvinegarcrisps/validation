@@ -85,6 +85,7 @@ class Validator {
 	 */
 	public function addRule($rule, $field) {
 		$this->rules[$field][] = $rule;
+		$this->validated = false;
 	}
 
 	/**
