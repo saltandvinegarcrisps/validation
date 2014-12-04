@@ -111,7 +111,7 @@ class Validator {
 
 			foreach($rules as $rule) {
 				if($rule instanceof Closure) {
-					$this->customRule($rule, $field, $value);
+					$this->validateCustomRule($rule, $field, $value);
 				}
 				else if($rule instanceof RuleInterface) {
 					$this->validateRule($rule, $field, $value);
