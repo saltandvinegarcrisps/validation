@@ -1,15 +1,13 @@
-<?php namespace Validation\Rules;
+<?php
 
-use Validation\Contracts\RuleInterface;
+namespace Validation\Rules;
 
-class Required implements RuleInterface {
+class Required extends Rule {
+
+	protected $message = '%s is required';
 
 	public function isValid($value) {
 		return false === empty($value);
-	}
-
-	public function getMessage() {
-		return '%s is required';
 	}
 
 }

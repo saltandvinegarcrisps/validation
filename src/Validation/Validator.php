@@ -7,51 +7,51 @@ class Validator {
 
 	/**
 	 * Input
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $input = array();
+	protected $input = [];
 
 	/**
 	 * Collection of rules
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $rules = array();
+	protected $rules = [];
 
 	/**
 	 * Collection of messages
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $messages = array();
+	protected $messages = [];
 
 	/**
 	 * Is the validator valid
-	 * 
+	 *
 	 * @var bool
 	 */
 	protected $valid = true;
 
 	/**
 	 * Has the validation executed
-	 * 
+	 *
 	 * @var bool
 	 */
 	protected $validated = false;
 
 	/**
 	 * Create a new validator on some input
-	 * 
+	 *
 	 * @param array
 	 */
 	public function __construct(array $input) {
 		$this->input = $input;
 	}
-	
+
 	/**
 	 * Add a message
-	 * 
+	 *
 	 * @param string
 	 * @param string
 	 */
@@ -66,20 +66,20 @@ class Validator {
 			}
 		}
 	}
-	
+
 	/**
 	 * Set the validator as invalid with a message as a reason
-	 * 
+	 *
 	 * @param string
 	 */
-	public function setInvalid($reason) {
+	public function setInvalid($reason, $field = null) {
 		$this->valid = false;
-		$this->addMessage($reason);
+		$this->addMessage($reason, $field);
 	}
 
 	/**
 	 * Add a custom rule
-	 * 
+	 *
 	 * @param object
 	 * @param string
 	 */
@@ -119,28 +119,28 @@ class Validator {
 			}
 		}
 	}
-	
+
 	/**
 	 * Execute rule
-	 * 
+	 *
 	 * @param object
 	 */
 	protected function validateRule(RuleInterface $rule, $field, $value) {
 		if(false === $rule->isValid($value)) {
 			$this->valid = false;
 
-			$this->addMessage(sprintf($rule->getMessage(), $field), $field);
+			$this->addMessage(sprintf($rule->getMessage(), $rule->getLabel()), $field);
 		}
 	}
-	
+
 	/**
 	 * Execute custom rule
-	 * 
+	 *
 	 * @param object
 	 */
 	protected function validateCustomRule(Closure $rule, $field, $value) {
 		list($result, $message) = $rule($value);
-		
+
 		if(false === $result) {
 			$this->valid = false;
 

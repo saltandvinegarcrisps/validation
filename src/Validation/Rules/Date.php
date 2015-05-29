@@ -1,15 +1,13 @@
-<?php namespace Validation\Rules;
+<?php
 
-use Validation\Contracts\RuleInterface;
+namespace Validation\Rules;
 
-class Date implements RuleInterface {
+class Date extends Rule {
+
+	protected $message = '%s is not a valid date';
 
 	public function isValid($value) {
 		return false !== strtotime($value);
-	}
-
-	public function getMessage() {
-		return '%s is not a valid date';
 	}
 
 }

@@ -1,15 +1,13 @@
-<?php namespace Validation\Rules;
+<?php
 
-use Validation\Contracts\RuleInterface;
+namespace Validation\Rules;
 
-class Alnum implements RuleInterface {
+class Alnum extends Rule {
+
+	protected $message = '%s contains none alpha-numeric characters';
 
 	public function isValid($value) {
 		return ctype_alnum($value);
-	}
-
-	public function getMessage() {
-		return '%s contains none alpha-numeric characters';
 	}
 
 }
