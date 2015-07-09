@@ -11,40 +11,37 @@ class Length extends Rule {
 	protected $length = 0;
 
 	public function __construct($range) {
-		if(strpos(',', $range) === false) {
-			$range .= ',';
+		$params = explode(',', $range);
+
+		if(count($params) == 2) {
+			list($this->min, $this->max) = $params;
 		}
-
-		list($min, $max) = explode(',', $range);
-
-		$this->min = '' === $min ? null : (int) $min;
-		$this->max = '' === $max ? null : (int) $max;
 	}
 
 	public function isValid($value) {
-		$this->length = strlen($value);
+		$length = strlen($value);
 
-		if($this->isValidMax() and $this->isValidMin()) {
+		if(false === $this->isValidMax($length) && false === $this->isValidMin($length)) {
 			return false;
 		}
 
 		return true;
 	}
 
-	protected function isValidMax() {
+	protected function isValidMax($length) {
 		if(null === $this->max) return true;
 
-		if($this->length > $this->max) {
+		if($length > $this->max) {
 			return false;
 		}
 
 		return true;
 	}
 
-	protected function isValidMin() {
+	protected function isValidMin($length) {
 		if(null === $this->min) return true;
 
-		if($this->length < $this->min) {
+		if($length < $this->min) {
 			return false;
 		}
 
@@ -52,17 +49,7 @@ class Length extends Rule {
 	}
 
 	public function getMessage() {
-		if($this->min > 0 and $this->max > 0) {
-			return '%s need to be more than '.$this->min.' characters and less than '.$this->max.' characters';
-		}
-
-		if($this->max > 0) {
-			return '%s need to be less than '.$this->max.' characters';
-		}
-
-		if($this->min > 0) {
-			return '%s need to be more than '.$this->min.' characters';
-		}
+		return '%s need to be more than '.$this->min.' characters and less than '.$this->max.' characters';
 	}
 
 }
