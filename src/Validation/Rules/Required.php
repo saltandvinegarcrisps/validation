@@ -2,12 +2,16 @@
 
 namespace Validation\Rules;
 
-class Required extends Rule {
+use Validation\AbstractRule;
+
+class Required extends AbstractRule {
 
 	protected $message = '%s is required';
 
-	public function isValid($value) {
-		return false === empty($value);
+	public function isValid() {
+		$value = $this->getValue();
+
+		return '' !== (string) $value;
 	}
 
 }

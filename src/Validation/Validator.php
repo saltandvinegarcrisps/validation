@@ -1,16 +1,15 @@
-<?php namespace Validation;
+<?php
 
-use Closure;
-use Validation\Contracts\RuleInterface;
+namespace Validation;
 
 class Validator {
 
 	/**
-	 * Input
+	 * values
 	 *
 	 * @var array
 	 */
-	protected $input = [];
+	protected $values = [];
 
 	/**
 	 * Collection of rules
@@ -41,12 +40,37 @@ class Validator {
 	protected $validated = false;
 
 	/**
+	 * Nuber of executed rules
+	 *
+	 * @var integer
+	 */
+	protected $executed = 0;
+
+	/**
 	 * Create a new validator on some input
 	 *
 	 * @param array
 	 */
-	public function __construct(array $input) {
-		$this->input = $input;
+	public function __construct(array $values = []) {
+		$this->values = $values;
+	}
+
+	/**
+	 * Get constructed values
+	 *
+	 * @return array
+	 */
+	public function getValues() {
+		return $this->values;
+	}
+
+	/**
+	 * Get messages
+	 *
+	 * @return array
+	 */
+	public function getMessages() {
+		return $this->messages;
 	}
 
 	/**
@@ -55,26 +79,17 @@ class Validator {
 	 * @param string
 	 * @param string
 	 */
-	public function addMessage($message, $field = null) {
-		if(null === $field) {
-			$this->messages[] = $message;
-		}
-		else {
-			// only set the first message for a field
-			if( ! isset($this->messages[$field])) {
-				$this->messages[$field] = $message;
-			}
-		}
+	public function addMessage($message) {
+		$this->messages[] = $message;
 	}
 
 	/**
-	 * Set the validator as invalid with a message as a reason
+	 * Get assigned rules
 	 *
-	 * @param string
+	 * @return array
 	 */
-	public function setInvalid($reason, $field = null) {
-		$this->valid = false;
-		$this->addMessage($reason, $field);
+	public function getRules() {
+		return $this->rules;
 	}
 
 	/**
@@ -86,6 +101,17 @@ class Validator {
 	public function addRule($rule, $field) {
 		$this->rules[$field][] = $rule;
 		$this->validated = false;
+	}
+
+	/**
+	 * Set the validator as invalid with a message as a reason
+	 *
+	 * @param string
+	 */
+	public function setInvalid($message) {
+		$this->valid = false;
+		$this->validated = true;
+		$this->addMessage($message);
 	}
 
 	/**
@@ -102,15 +128,24 @@ class Validator {
 	}
 
 	/**
+	 * Return the number of executed rules
+	 *
+	 * @return integer
+	 */
+	public function countExecutedRules() {
+		return $this->executed;
+	}
+
+	/**
 	 * Run rule on fields
 	 */
 	protected function validate() {
 		foreach($this->rules as $field => $rules) {
 			// get input value
-			$value = isset($this->input[$field]) ? $this->input[$field] : null;
+			$value = array_key_exists($field, $this->values) ? $this->values[$field] : null;
 
 			foreach($rules as $rule) {
-				if($rule instanceof Closure) {
+				if($rule instanceof \Closure) {
 					$this->validateCustomRule($rule, $field, $value);
 				}
 				else if($rule instanceof RuleInterface) {
@@ -126,10 +161,16 @@ class Validator {
 	 * @param object
 	 */
 	protected function validateRule(RuleInterface $rule, $field, $value) {
-		if(false === $rule->isValid($value)) {
+		$result = $rule->withValue($value)->isValid();
+
+		$this->executed += 1;
+
+		if(false === $result) {
 			$this->valid = false;
 
-			$this->addMessage(sprintf($rule->getMessage(), $rule->getLabel()), $field);
+			$message = sprintf($rule->getMessage(), $rule->getLabel());
+
+			$this->addMessage($message);
 		}
 	}
 
@@ -138,23 +179,18 @@ class Validator {
 	 *
 	 * @param object
 	 */
-	protected function validateCustomRule(Closure $rule, $field, $value) {
+	protected function validateCustomRule(\Closure $rule, $field, $value) {
 		list($result, $message) = $rule($value);
+
+		$this->executed += 1;
 
 		if(false === $result) {
 			$this->valid = false;
 
-			$this->addMessage(sprintf($message, $field), $field);
-		}
-	}
+			$message = sprintf($message, $field);
 
-	/**
-	 * Get messages
-	 *
-	 * @return array
-	 */
-	public function getMessages() {
-		return $this->messages;
+			$this->addMessage($message);
+		}
 	}
 
 }

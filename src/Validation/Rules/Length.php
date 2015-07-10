@@ -2,44 +2,41 @@
 
 namespace Validation\Rules;
 
-class Length extends Rule {
+use Validation\AbstractRule;
 
-	protected $min;
+class Length extends AbstractRule {
 
-	protected $max;
+	protected $min = 0;
+
+	protected $max = 0;
 
 	protected $length = 0;
 
-	public function __construct($range) {
-		$params = explode(',', $range);
+	public function __construct($range = '0,0') {
+		list($min, $max) = explode(',', $range);
 
-		if(count($params) == 2) {
-			list($this->min, $this->max) = $params;
-		}
+		$this->setRange($min, $max);
 	}
 
-	public function isValid($value) {
+	public function setRange($min, $max = 0) {
+		$this->min = (int) $min;
+		$this->max = (int) $max;
+	}
+
+	public function withRange($min, $max = 0) {
+		$this->setRange($min, $max);
+
+		return $this;
+	}
+
+	public function isValid() {
+		$value = $this->getValue();
+
 		$length = strlen($value);
 
-		if(false === $this->isValidMax($length) && false === $this->isValidMin($length)) {
+		if($this->max > 0 && $length > $this->max) {
 			return false;
 		}
-
-		return true;
-	}
-
-	protected function isValidMax($length) {
-		if(null === $this->max) return true;
-
-		if($length > $this->max) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected function isValidMin($length) {
-		if(null === $this->min) return true;
 
 		if($length < $this->min) {
 			return false;

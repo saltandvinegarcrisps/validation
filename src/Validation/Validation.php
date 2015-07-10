@@ -27,7 +27,7 @@ class Validation {
 	protected function addRulesWithOptions($validator, $field, array $options) {
 		$defaults = [
 			'label' => ucfirst($field),
-			'messages' => [],
+			'message' => '',
 			'rules' => [],
 		];
 
@@ -39,8 +39,8 @@ class Validation {
 			$rule = $this->rule($name, $params);
 			$rule->setLabel($options['label']);
 
-			if(array_key_exists($name, $options['messages'])) {
-				$rule->setMessage($options['messages'][$name]);
+			if($options['message']) {
+				$rule->setMessage($options['message']);
 			}
 
 			$validator->addRule($rule, $field);

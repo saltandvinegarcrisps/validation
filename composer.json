@@ -2,7 +2,7 @@
 	"name": "rwarasaurus/validation",
 	"description": "Input validator",
 	"license": "GPL-3.0",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"type": "library",
 	"authors": [
 		{
@@ -13,12 +13,17 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3"
+		"php": ">=5.5"
+	},
+	"require-dev": {
+		"phpspec/phpspec": "~2.0"
+	},
+	"config": {
+		"bin-dir": "bin"
 	},
 	"autoload": {
-		"psr-0": {
-			"Validation": "src/"
+		"psr-4": {
+			"": "src/"
 		}
-	},
-	"minimum-stability": "dev"
+	}
 }

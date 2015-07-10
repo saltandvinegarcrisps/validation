@@ -1,1 +1,6 @@
-.c9
+bin
+vendor
+.DS_Store
+*.log
+*.lock
+*.phar

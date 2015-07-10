@@ -1,8 +1,10 @@
-<?php namespace Validation\Contracts;
+<?php
+
+namespace Validation;
 
 interface RuleInterface {
 
-	public function isValid($value);
+	public function isValid();
 
 	public function getMessage();
 
@@ -11,5 +13,11 @@ interface RuleInterface {
 	public function getLabel();
 
 	public function setLabel($label);
+
+	public function getValue();
+
+	public function setValue($value);
+
+	public function withValue($value);
 
 }
