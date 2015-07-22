@@ -46,6 +46,10 @@ class ValidatorSpec extends ObjectBehavior {
 		$this->isValid();
 
 		$this->countExecutedRules()->shouldBeEqualTo(1);
+
+		$this->isValid();
+
+		$this->countExecutedRules()->shouldBeEqualTo(1);
 	}
 
 	public function it_should_validate_custom_rules() {
@@ -54,6 +58,10 @@ class ValidatorSpec extends ObjectBehavior {
 		$this->addRule(function($value) { return [$value === '', 'message']; }, 'foo');
 
 		$this->countExecutedRules()->shouldBeEqualTo(0);
+
+		$this->isValid();
+
+		$this->countExecutedRules()->shouldBeEqualTo(1);
 
 		$this->isValid();
 
