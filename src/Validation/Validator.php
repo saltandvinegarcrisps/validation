@@ -81,6 +81,8 @@ class Validator {
 	 */
 	public function addMessage($message) {
 		$this->messages[] = $message;
+
+		return $this;
 	}
 
 	/**
@@ -101,6 +103,8 @@ class Validator {
 	public function addRule($rule, $field) {
 		$this->rules[$field][] = $rule;
 		$this->validated = false;
+
+		return $this;
 	}
 
 	/**
@@ -109,9 +113,15 @@ class Validator {
 	 * @param string
 	 */
 	public function setInvalid($message) {
+		if( ! is_string($message)) {
+			throw new \InvalidArgumentException('message must be a string');
+		}
+
+		$this->validate();
+
 		$this->valid = false;
-		$this->validated = true;
-		$this->addMessage($message);
+
+		return $this->addMessage($message);
 	}
 
 	/**
