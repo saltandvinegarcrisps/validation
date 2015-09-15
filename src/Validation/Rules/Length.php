@@ -32,7 +32,7 @@ class Length extends AbstractRule {
 	public function isValid() {
 		$value = $this->getValue();
 
-		$length = strlen($value);
+		$length = mb_strlen($value);
 
 		if($this->max > 0 && $length > $this->max) {
 			return false;
@@ -46,7 +46,17 @@ class Length extends AbstractRule {
 	}
 
 	public function getMessage() {
-		return '%s need to be more than '.$this->min.' characters and less than '.$this->max.' characters';
+		if($this->min > 0 && $this->max > 0) {
+			return '%s needs to be more than '.$this->min.' characters and less than '.$this->max.' characters';
+		}
+
+		if($this->min > 0 && $this->max == 0) {
+			return '%s needs to be more than '.$this->min.' characters';
+		}
+
+		if($this->min == 0 && $this->max > 0) {
+			return '%s needs to be less than '.$this->min.' characters';
+		}
 	}
 
 }
