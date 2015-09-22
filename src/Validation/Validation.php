@@ -44,8 +44,8 @@ class Validation {
 				$rule->setMessage($options['message']);
 			}
 
-			if( ! empty($options['message'][$name])) {
-				$rule->setMessage($options['message'][$name]);
+			if( ! empty($options['messages'][$name])) {
+				$rule->setMessage($options['messages'][$name]);
 			}
 
 			$validator->addRule($rule, $field);
