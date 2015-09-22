@@ -28,6 +28,7 @@ class Validation {
 		$defaults = [
 			'label' => ucfirst($field),
 			'message' => '',
+			'messages' => [],
 			'rules' => [],
 		];
 
@@ -39,8 +40,12 @@ class Validation {
 			$rule = $this->rule($name, $params);
 			$rule->setLabel($options['label']);
 
-			if($options['message']) {
+			if( ! empty($options['message'])) {
 				$rule->setMessage($options['message']);
+			}
+
+			if( ! empty($options['message'][$name])) {
+				$rule->setMessage($options['message'][$name]);
 			}
 
 			$validator->addRule($rule, $field);
