@@ -11,7 +11,7 @@ class Required extends AbstractRule {
 	public function isValid() {
 		$value = $this->getValue();
 
-		return '' !== (string) $value;
+		return false === empty($value);
 	}
 
 }
