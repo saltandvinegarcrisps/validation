@@ -10,7 +10,7 @@ abstract class AbstractRule implements RuleInterface
 
     protected $message = '';
 
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }
