@@ -9,7 +9,18 @@ use Validation\Rules\RuleInterface;
  */
 class ValidatorFactory
 {
-    protected function parsePattern(string $pattern): array
+    public static function create(array $input, array $rules): ValidatorInterface
+    {
+        $validator = new Validator($input);
+
+        foreach ($rules as $field => $options) {
+            static::addRules($validator, $field, $options);
+        }
+
+        return $validator;
+    }
+
+    protected static function parsePattern(string $pattern): array
     {
         $params = explode(':', $pattern);
         $name = array_shift($params);
@@ -17,14 +28,14 @@ class ValidatorFactory
         return [$name, $params];
     }
 
-    protected function ruleFromPattern(string $pattern): RuleInterface
+    protected static function ruleFromPattern(string $pattern): RuleInterface
     {
-        list($name, $params) = $this->parsePattern($pattern);
+        list($name, $params) = static::parsePattern($pattern);
 
-        return $this->rule($name, $params);
+        return static::rule($name, $params);
     }
 
-    protected function rule(string $name, array $params = []): RuleInterface
+    protected static function rule(string $name, array $params = []): RuleInterface
     {
         $class = sprintf('\\Validation\\Rules\\%s', ucfirst($name));
 
@@ -32,7 +43,7 @@ class ValidatorFactory
         return $ref->newInstanceArgs($params);
     }
 
-    protected function addRulesWithOptions(ValidatorInterface $validator, string $field, array $options)
+    protected static function addRulesWithOptions(ValidatorInterface $validator, string $field, array $options)
     {
         $defaults = [
             'label' => ucfirst($field),
@@ -44,9 +55,9 @@ class ValidatorFactory
         $options = array_merge($defaults, $options);
 
         foreach ($options['rules'] as $pattern) {
-            list($name, $params) = $this->parsePattern($pattern);
+            list($name, $params) = static::parsePattern($pattern);
 
-            $rule = $this->rule($name, $params);
+            $rule = static::rule($name, $params);
             $rule->setLabel($options['label']);
 
             if (! empty($options['message'])) {
@@ -61,28 +72,17 @@ class ValidatorFactory
         }
     }
 
-    protected function addRules(ValidatorInterface $validator, string $field, array $options)
+    protected static function addRules(ValidatorInterface $validator, string $field, array $options)
     {
         if (array_key_exists('rules', $options)) {
-            return $this->addRulesWithOptions($validator, $field, $options);
+            return static::addRulesWithOptions($validator, $field, $options);
         }
 
         foreach ($options as $pattern) {
-            $rule = $this->ruleFromPattern($pattern);
+            $rule = static::ruleFromPattern($pattern);
             $rule->setLabel($field);
 
             $validator->addRule($rule, $field);
         }
-    }
-
-    public static function create(array $input, array $rules): ValidatorInterface
-    {
-        $validator = new Validator($input);
-
-        foreach ($rules as $field => $options) {
-            $this->addRules($validator, $field, $options);
-        }
-
-        return $validator;
     }
 }
