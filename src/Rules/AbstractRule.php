@@ -4,7 +4,7 @@ namespace Validation\Rules;
 
 abstract class AbstractRule implements RuleInterface
 {
-    protected $value = '';
+    protected $value;
 
     protected $label = '';
 
@@ -15,12 +15,12 @@ abstract class AbstractRule implements RuleInterface
         return $this->value;
     }
 
-    public function setValue(string $value)
+    public function setValue($value)
     {
         $this->value = $value;
     }
 
-    public function withValue(string $value): RuleInterface
+    public function withValue($value): RuleInterface
     {
         $this->setValue($value);
 

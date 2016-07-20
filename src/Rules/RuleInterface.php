@@ -18,9 +18,9 @@ interface RuleInterface
 
     public function withLabel(string $label): RuleInterface;
 
-    public function getValue(): string;
+    public function getValue();
 
-    public function setValue(string $value);
+    public function setValue($value);
 
-    public function withValue(string $value): RuleInterface;
+    public function withValue($value): RuleInterface;
 }
