@@ -14,7 +14,7 @@ class Length extends AbstractRule
     {
         list($min, $max) = explode(',', $range, 2);
 
-        $this->setRange($min, $max);
+        $this->setRange($min, (!!$max ? $max : 0));
     }
 
     public function setRange(int $min, int $max = 0)
