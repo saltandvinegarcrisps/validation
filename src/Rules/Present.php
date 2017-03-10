@@ -10,6 +10,6 @@ class Present extends AbstractRule
     {
         $value = $this->getValue();
 
-        return null === $value;
+        return null !== $value;
     }
 }
