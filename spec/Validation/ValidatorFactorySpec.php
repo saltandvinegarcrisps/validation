@@ -3,11 +3,9 @@
 namespace spec\ValidatorFactory;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class ValidatorFactorySpec extends ObjectBehavior
 {
-
     public function it_is_initializable()
     {
         $this->shouldHaveType('Validation\ValidatorFactory');

@@ -1,7 +1,7 @@
 {
 	"name": "rwarasaurus/validation",
 	"description": "Input validator",
-	"license": "GPL-3.0",
+	"license": "Apache-2.0",
 	"type": "library",
 	"authors": [
 		{
@@ -15,7 +15,8 @@
 		"php": ">=7"
 	},
 	"require-dev": {
-		"phpspec/phpspec": "~2"
+		"phpspec/phpspec": "~3",
+		"friendsofphp/php-cs-fixer": "dev-master"
 	},
 	"config": {
 		"bin-dir": "bin"

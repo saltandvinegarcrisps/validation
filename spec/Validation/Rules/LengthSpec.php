@@ -3,11 +3,9 @@
 namespace spec\Validation\Rules;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class LengthSpec extends ObjectBehavior
 {
-
     public function it_is_initializable()
     {
         $this->shouldHaveType('Validation\Rules\Length');

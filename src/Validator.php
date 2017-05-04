@@ -156,13 +156,35 @@ class Validator implements ValidatorInterface
     }
 
     /**
+     * Get value from values
+     *
+     * @param string
+     * @return mixed
+     */
+    public function getValue(string $key)
+    {
+        $keys = explode('.', $key);
+        $values =& $this->values;
+
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $values)) {
+                $values =& $values[$key];
+            } else {
+                return null;
+            }
+        }
+
+        return $values;
+    }
+
+    /**
      * Run rule on fields
      */
     protected function validate()
     {
         foreach ($this->rules as $field => $rules) {
             // get input value
-            $value = array_key_exists($field, $this->values) ? $this->values[$field] : null;
+            $value = $this->getValue($field);
 
             foreach ($rules as $rule) {
                 if ($rule instanceof \Closure) {

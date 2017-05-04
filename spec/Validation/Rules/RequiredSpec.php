@@ -3,11 +3,9 @@
 namespace spec\Validation\Rules;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class RequiredSpec extends ObjectBehavior
 {
-
     public function it_is_initializable()
     {
         $this->shouldHaveType('Validation\Rules\Required');

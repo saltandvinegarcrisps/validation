@@ -3,20 +3,45 @@
 namespace spec\Validation;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class ValidatorSpec extends ObjectBehavior
 {
-
     public function it_is_initializable()
     {
         $this->shouldHaveType('Validation\Validator');
     }
 
-    public function it_can_be_constructed_with_values()
+    public function it_should_be_constructed_with_values()
     {
         $this->beConstructedWith(['foo' => 'bar']);
         $this->getValues()->shouldHaveKeyWithValue('foo', 'bar');
+    }
+
+    public function it_should_return_a_value()
+    {
+        $this->beConstructedWith([
+            'foo' => 'bar',
+        ]);
+        $this->getValue('foo')->shouldEqual('bar');
+    }
+
+    public function it_should_return_a_nested_value()
+    {
+        $this->beConstructedWith([
+            'foo' => [
+                'bar' => [
+                    'baz' => 'qux',
+                ],
+            ],
+        ]);
+        $this->getValue('foo.bar')->shouldHaveKeyWithValue('baz', 'qux');
+        $this->getValue('foo.bar.baz')->shouldEqual('qux');
+    }
+
+    public function it_should_return_null_on_missing_values()
+    {
+        $this->beConstructedWith([]);
+        $this->getValue('foo')->shouldEqual(null);
     }
 
     public function it_should_add_messages()
@@ -25,7 +50,7 @@ class ValidatorSpec extends ObjectBehavior
         $this->getMessages()->shouldContain('baz');
     }
 
-    public function it_can_be_set_as_invalid()
+    public function it_should_be_set_as_invalid()
     {
         $this->setInvalid('baz');
         $this->isValid()->shouldBeEqualTo(false);
@@ -63,7 +88,9 @@ class ValidatorSpec extends ObjectBehavior
     {
         $this->beConstructedWith(['foo' => 'bar']);
 
-        $this->addRule(function ($value) { return [$value === '', 'message']; }, 'foo');
+        $this->addRule(function ($value) {
+            return [$value === '', 'message'];
+        }, 'foo');
 
         $this->countExecutedRules()->shouldBeEqualTo(0);
 
