@@ -10,6 +10,6 @@ class Required extends AbstractRule
     {
         $value = $this->getValue();
 
-        return null !== $value && '' !== $value;
+        return '' !== (string) $value;
     }
 }
