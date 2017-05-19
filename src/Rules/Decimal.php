@@ -14,6 +14,6 @@ class Decimal extends AbstractRule
             return false;
         }
 
-        return 1 === preg_match('#^[0-9\.]+$#', (string) $value);
+        return 1 === preg_match('#^[0-9\.\-]+$#', (string) $value);
     }
 }
