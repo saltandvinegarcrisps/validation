@@ -34,7 +34,11 @@ class Length extends AbstractRule
     {
         $value = $this->getValue();
 
-        $length = strlen($value);
+        if(is_array($value)) {
+            $length = count($value);
+        } else {
+            $length = strlen($value);
+        }
 
         if ($this->max > 0 && $length > $this->max) {
             return false;

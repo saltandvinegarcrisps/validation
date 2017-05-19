@@ -8,6 +8,10 @@ class Email extends AbstractRule
 
     public function isValid(): bool
     {
+        if(is_array($value)) {
+            return false;
+        }
+
         return false !== filter_var($this->getValue(), FILTER_VALIDATE_EMAIL);
     }
 }

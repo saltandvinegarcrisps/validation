@@ -15,7 +15,13 @@ class Max extends AbstractRule
     {
         $value = $this->getValue();
 
-        return strlen($value) <= $this->length;
+        if(is_array($value)) {
+            $length = count($value);
+        } else {
+            $length = strlen($value);
+        }
+
+        return $length <= $this->length;
     }
 
     public function getMessage(): string

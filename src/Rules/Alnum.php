@@ -10,6 +10,10 @@ class Alnum extends AbstractRule
     {
         $value = $this->getValue();
 
-        return is_string($value) && 1 === preg_match('#^[A-z0-9]+$#', $value);
+        if(is_array($value)) {
+            return false;
+        }
+
+        return 1 === preg_match('#^[A-z0-9]+$#', (string) $value);
     }
 }

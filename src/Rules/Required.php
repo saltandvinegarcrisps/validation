@@ -10,6 +10,10 @@ class Required extends AbstractRule
     {
         $value = $this->getValue();
 
+        if(is_array($value)) {
+            return !empty($value);
+        }
+
         return '' !== (string) $value;
     }
 }

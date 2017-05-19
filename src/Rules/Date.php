@@ -10,6 +10,10 @@ class Date extends AbstractRule
     {
         $value = $this->getValue();
 
+        if(is_array($value)) {
+            return false;
+        }
+
         $time = is_numeric($value) ? $value : strtotime($value);
 
         return false !== $time;
