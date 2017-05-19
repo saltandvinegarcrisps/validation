@@ -167,7 +167,7 @@ class Validator implements ValidatorInterface
         $values =& $this->values;
 
         foreach ($keys as $key) {
-            if (array_key_exists($key, $values)) {
+            if (is_array($values) && array_key_exists($key, $values)) {
                 $values =& $values[$key];
             } else {
                 return null;
