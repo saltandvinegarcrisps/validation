@@ -10,6 +10,6 @@ class Num extends AbstractRule
     {
         $value = $this->getValue();
 
-        return 1 === preg_match('#^[0-9]+$#', (string) $value);
+        return 1 === preg_match('#^[0-9\-]+$#', (string) $value);
     }
 }
