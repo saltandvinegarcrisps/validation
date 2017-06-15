@@ -12,7 +12,8 @@
 		}
 	],
 	"require": {
-		"php": ">=7"
+		"php": ">=7",
+		"ext-mbstring": "*"
 	},
 	"require-dev": {
 		"phpspec/phpspec": "~3",
