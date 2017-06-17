@@ -7,7 +7,7 @@ use Validation\Constraint;
 
 class Date extends Assertion implements Constraint
 {
-    protected $message = ':attribute is not a valid date format';
+    protected $message = ':attribute is not a valid date';
 
     protected $format = 'Y-m-d';
 

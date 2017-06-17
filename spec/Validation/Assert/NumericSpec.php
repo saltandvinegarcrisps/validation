@@ -16,6 +16,30 @@ class NumericSpec extends ObjectBehavior
         $this->isValid(1)->shouldReturn(true);
     }
 
+    public function it_should_not_validate_with_a_min_number()
+    {
+        $this->beConstructedWith(['min' => 2]);
+        $this->isValid(1)->shouldReturn(false);
+    }
+
+    public function it_should_validate_with_a_min_number()
+    {
+        $this->beConstructedWith(['min' => 2]);
+        $this->isValid(3)->shouldReturn(true);
+    }
+
+    public function it_should_not_validate_with_a_max_number()
+    {
+        $this->beConstructedWith(['max' => 2]);
+        $this->isValid(3)->shouldReturn(false);
+    }
+
+    public function it_should_validate_with_a_max_number()
+    {
+        $this->beConstructedWith(['max' => 2]);
+        $this->isValid(1)->shouldReturn(true);
+    }
+
     public function it_should_validate_signed_number()
     {
         $this->isValid(-1)->shouldReturn(true);

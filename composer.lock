@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ec812391ffd4bd46fff38afbbd8d23b",
+    "content-hash": "c6accaee68ed9bb7a564762bfed257b1",
     "packages": [],
     "packages-dev": [
         {
@@ -189,12 +189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "0b4e9864789037d3b47bf1c021f3ade8111891d9"
+                "reference": "735d1e6d4880fff6a2570ccc1b4e1996bc3908ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/0b4e9864789037d3b47bf1c021f3ade8111891d9",
-                "reference": "0b4e9864789037d3b47bf1c021f3ade8111891d9",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/735d1e6d4880fff6a2570ccc1b4e1996bc3908ee",
+                "reference": "735d1e6d4880fff6a2570ccc1b4e1996bc3908ee",
                 "shasum": ""
             },
             "require": {
@@ -257,7 +257,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2017-06-14T09:28:58+00:00"
+            "time": "2017-06-15T12:07:59+00:00"
         },
         {
             "name": "gecko-packages/gecko-php-unit",
@@ -1683,7 +1683,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7"
+        "php": ">=7",
+        "ext-mbstring": "*"
     },
     "platform-dev": []
 }
