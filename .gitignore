@@ -1,5 +1,6 @@
 bin
 vendor
 *.log
+*.lock
 *.phar
 *.cache
