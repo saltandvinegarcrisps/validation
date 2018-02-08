@@ -37,12 +37,12 @@ class Numeric implements Constraint
             return false;
         }
 
-        if ($this->min !== null && $number < $this->min) {
+        if ($this->min !== null && $value < $this->min) {
             $this->message = $this->message_gt;
             return false;
         }
 
-        if ($this->max !== null && $number > $this->max) {
+        if ($this->max !== null && $value > $this->max) {
             $this->message = $this->message_lt;
             return false;
         }
