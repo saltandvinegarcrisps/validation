@@ -30,16 +30,6 @@ class Numeric implements Constraint
         }
     }
 
-    protected function isMin(float $number): bool
-    {
-        return $this->min !== null && $number < $this->min;
-    }
-
-    protected function isMax(float $number): bool
-    {
-        return $this->max !== null && $number > $this->max;
-    }
-
     public function isValid($value): bool
     {
         if (filter_var($value, FILTER_VALIDATE_FLOAT) === false) {
@@ -47,12 +37,12 @@ class Numeric implements Constraint
             return false;
         }
 
-        if ($this->isMin($value)) {
+        if ($this->min !== null && $number < $this->min) {
             $this->message = $this->message_gt;
             return false;
         }
 
-        if ($this->isMax($value)) {
+        if ($this->max !== null && $number > $this->max) {
             $this->message = $this->message_lt;
             return false;
         }
