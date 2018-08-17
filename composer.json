@@ -13,7 +13,8 @@
 	],
 	"require": {
 		"php": ">=7",
-		"ext-mbstring": "*"
+		"ext-mbstring": "*",
+        "egulias/email-validator": "~2"
 	},
 	"require-dev": {
 		"phpspec/phpspec": "~3",
