@@ -13,7 +13,7 @@ class Violations implements \Countable
 
     protected function toWords(string $attribute): string
     {
-        return str_replace(['_', '.'], ' ', $attribute);
+        return str_replace(['-', '_', '.'], ' ', $attribute);
     }
 
     public function getMessages(): array

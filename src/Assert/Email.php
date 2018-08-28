@@ -14,7 +14,12 @@ class Email extends Assertion implements Constraint
 
     public function isValid($value): bool
     {
+        if (!is_string($value)) {
+            return false;
+        }
+
         $validator = new EmailValidator();
+
         return $validator->isValid($value, new RFCValidation());
     }
 }

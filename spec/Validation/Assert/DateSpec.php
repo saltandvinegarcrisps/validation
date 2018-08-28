@@ -15,6 +15,9 @@ class DateSpec extends ObjectBehavior
     {
         $this->beConstructedWith(['format' => 'Y-m-d']);
         $this->isValid('2016-01-01')->shouldReturn(true);
+        $this->isValid('0000-00-00')->shouldReturn(false);
+        $this->isValid('1782-01-01')->shouldReturn(true);
+        $this->isValid('2018-02-31')->shouldReturn(false);
     }
 
     public function it_should_not_validate_string()

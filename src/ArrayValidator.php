@@ -11,14 +11,14 @@ class ArrayValidator
         return $this->attributes;
     }
 
-    public function addConstraints($attribute, array $constraints)
+    public function addConstraints(string $attribute, array $constraints)
     {
         foreach ($constraints as $constraint) {
             $this->addConstraint($attribute, $constraint);
         }
     }
 
-    public function addConstraint($attribute, Constraint $constraint)
+    public function addConstraint(string $attribute, Constraint $constraint)
     {
         $this->attributes[$attribute][] = $constraint;
     }
@@ -39,9 +39,11 @@ class ArrayValidator
         return $values;
     }
 
-    public function validate(array $payload): Violations
+    public function validate(array $payload, Violations $violations = null): Violations
     {
-        $violations = new Violations();
+        if (null === $violations) {
+            $violations = new Violations();
+        }
 
         foreach ($this->attributes as $attribute => $constraints) {
             // get the value from the payload

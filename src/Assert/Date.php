@@ -2,6 +2,7 @@
 
 namespace Validation\Assert;
 
+use DateTime;
 use Validation\Assertion;
 use Validation\Constraint;
 
@@ -25,6 +26,9 @@ class Date extends Assertion implements Constraint
         if (!is_string($value)) {
             return false;
         }
-        return \DateTime::createFromFormat($this->format, $value) !== false;
+
+        $date = DateTime::createFromFormat($this->format, $value);
+
+        return $date instanceof DateTime && $date->format($this->format) === $value;
     }
 }
