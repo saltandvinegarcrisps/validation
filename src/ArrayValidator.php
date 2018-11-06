@@ -11,14 +11,19 @@ class ArrayValidator
         return $this->attributes;
     }
 
-    public function addConstraints(string $attribute, array $constraints)
+    public function addConstraints(string $attribute, array $constraints): void
     {
         foreach ($constraints as $constraint) {
             $this->addConstraint($attribute, $constraint);
         }
     }
 
-    public function addConstraint(string $attribute, Constraint $constraint)
+    public function removeConstraints(string $attribute): void
+    {
+        unset($this->attributes[$attribute]);
+    }
+
+    public function addConstraint(string $attribute, Constraint $constraint): void
     {
         $this->attributes[$attribute][] = $constraint;
     }
