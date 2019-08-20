@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class NumericSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\Assert\Numeric');
-    }
-
     public function it_should_validate_number()
     {
         $this->isValid(1)->shouldReturn(true);

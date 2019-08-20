@@ -1,32 +1,45 @@
 {
-	"name": "rwarasaurus/validation",
-	"description": "Input validator",
-	"license": "Apache-2.0",
-	"type": "library",
-	"authors": [
-		{
-			"name": "Kieron",
-			"email": "hello@madebykieron.co.uk",
-			"homepage": "http://madebykieron.co.uk",
-			"role": "Developer"
-		}
-	],
-	"require": {
-		"php": ">=7",
-		"ext-mbstring": "*",
-        "egulias/email-validator": "~2",
-        "phpstan/phpstan": "~0"
-	},
-	"require-dev": {
-		"phpspec/phpspec": "~3",
-		"friendsofphp/php-cs-fixer": "dev-master"
-	},
-	"config": {
-		"bin-dir": "bin"
-	},
-	"autoload": {
-		"psr-4": {
-			"Validation\\": "src/"
-		}
-	}
+    "name": "rwarasaurus/validation",
+    "description": "Input validator",
+    "license": "Apache-2.0",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Kieron",
+            "email": "hello@madebykieron.co.uk",
+            "homepage": "http://madebykieron.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7",
+        "ext-mbstring": "*",
+        "egulias/email-validator": "^2"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3",
+        "phpstan/phpstan": "^0",
+        "friendsofphp/php-cs-fixer": "^2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Validation\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "bin-dir": "bin"
+    },
+    "scripts": {
+        "psr": [
+            "./bin/php-cs-fixer fix src/ --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline_array",
+            "./bin/php-cs-fixer fix spec/ --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline_array"
+        ],
+        "uninstall": [
+            "rm -rf ./bin",
+            "rm -rf ./vendor",
+            "rm ./composer.lock"
+        ]
+    }
 }

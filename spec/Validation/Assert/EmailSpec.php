@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class EmailSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\Assert\Email');
-    }
-
     public function it_should_validate_emails()
     {
         $this->isValid('test@test.com')->shouldReturn(true);

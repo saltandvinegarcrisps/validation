@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class ArrayValidatorSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\ArrayValidator');
-    }
-
     public function it_should_add_constraints()
     {
         $this->addConstraint('foo', new \Validation\Assert\Present);

@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class DateSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\Assert\Date');
-    }
-
     public function it_should_validate_date()
     {
         $this->beConstructedWith(['format' => 'Y-m-d']);

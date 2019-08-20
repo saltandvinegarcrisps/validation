@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Validation\Assert;
 
@@ -14,7 +14,12 @@ class Date extends Assertion implements Constraint
 
     protected $zeros = false;
 
-    public function __construct(array $options = [])
+    /**
+     * Set options
+     *
+     * @param array
+     */
+    public function setOptions(array $options): void
     {
         $options = array_intersect_key($options, array_flip(['message', 'format', 'zeros']));
 

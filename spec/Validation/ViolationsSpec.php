@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class ViolationsSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\Violations');
-    }
-
     public function it_should_add_violations()
     {
         $this->add('foo', [new \Validation\Assert\Present]);

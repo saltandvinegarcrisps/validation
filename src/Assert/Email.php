@@ -1,12 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Validation\Assert;
 
-use Validation\Assertion;
-use Validation\Constraint;
-
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\RFCValidation;
+use Validation\Assertion;
+use Validation\Constraint;
 
 class Email extends Assertion implements Constraint
 {

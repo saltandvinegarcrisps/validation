@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class LengthSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\Assert\Length');
-    }
-
     public function it_should_validate_strings_of_correct_length()
     {
         $this->beConstructedWith(['min' => 4, 'max' => 4]);

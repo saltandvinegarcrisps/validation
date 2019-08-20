@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Validation\Assert;
 
@@ -11,8 +11,9 @@ class ArrayOf extends Assertion implements Constraint
 
     protected $constraint;
 
-    public function __construct(Constraint $constraint)
+    public function __construct(Constraint $constraint, array $options = [])
     {
+        parent::__construct($options);
         $this->constraint = $constraint;
     }
 

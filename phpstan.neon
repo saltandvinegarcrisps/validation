@@ -1,4 +1,7 @@
 parameters:
-    level: 7
+    level: max
     paths:
         - %currentWorkingDirectory%/src
+    bootstrap: %currentWorkingDirectory%/vendor/autoload.php
+    ignoreErrors:
+        - '#PHPDoc tag#'

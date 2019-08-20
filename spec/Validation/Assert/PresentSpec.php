@@ -6,11 +6,6 @@ use PhpSpec\ObjectBehavior;
 
 class PresentSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
-    {
-        $this->shouldHaveType('Validation\Assert\Present');
-    }
-
     public function it_should_validate_strings()
     {
         $this->isValid('1')->shouldReturn(true);

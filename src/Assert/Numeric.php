@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Validation\Assert;
 
 use Validation\Assertion;
 use Validation\Constraint;
 
-class Numeric implements Constraint
+class Numeric extends Assertion implements Constraint
 {
     protected $message;
 
@@ -19,7 +19,12 @@ class Numeric implements Constraint
 
     protected $message_gt = ':attribute must be greater than or equal to :min';
 
-    public function __construct(array $options = [])
+    /**
+     * Set options
+     *
+     * @param array
+     */
+    public function setOptions(array $options): void
     {
         $properties = ['min', 'max', 'message_type', 'message_lt', 'message_gt'];
 
