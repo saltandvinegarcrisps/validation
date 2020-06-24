@@ -16,9 +16,8 @@ $versions = GitVersionCollection::create($dir)
 ;
 
 return new Sami($iterator, array(
-    'theme'                => 'symfony',
-    'versions'             => $versions,
-    'title'                => 'Validation',
-    'build_dir'            => __DIR__.'/docs',
+    'versions' => $versions,
+    'title' => 'Validation',
+    'build_dir' => __DIR__.'/docs',
     'default_opened_level' => 2,
 ));
