@@ -7,18 +7,29 @@ use Validation\Constraint;
 
 class Enum extends Assertion implements Constraint
 {
+    /**
+     * @var string
+     */
     protected $message;
 
+    /**
+     * @var array<string>
+     */
     protected $values;
 
+    /**
+     * @param array<string> $values
+     */
     public function __construct(array $values)
     {
-        $this->values = $values;
         $this->message = ':attribute can only be '.implode(', ', $values);
     }
 
-    public function isValid($value): bool
+    /**
+     * @param string|null $value
+     */
+    public function isValid(?string $value): bool
     {
-        return in_array($value, $this->values);
+        return in_array($value, $this->values, true);
     }
 }

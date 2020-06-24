@@ -6,6 +6,9 @@ use DateTime;
 use Validation\Assertion;
 use Validation\Constraint;
 
+/**
+ *
+ */
 class Date extends Assertion implements Constraint
 {
     protected $message = ':attribute is not a valid date';
@@ -28,7 +31,10 @@ class Date extends Assertion implements Constraint
         }
     }
 
-    public function isValid($value): bool
+    /**
+     * @param string|null $value
+     */
+    public function isValid(?string $value): bool
     {
         if (!is_string($value)) {
             return false;

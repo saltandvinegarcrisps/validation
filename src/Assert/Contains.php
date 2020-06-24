@@ -5,7 +5,7 @@ namespace Validation\Assert;
 use Validation\Assertion;
 use Validation\Constraint;
 
-class ArrayOf extends Assertion implements Constraint
+class Contains extends Assertion implements Constraint
 {
     protected $message = ':attribute is not a valid list';
 
@@ -17,7 +17,10 @@ class ArrayOf extends Assertion implements Constraint
         $this->constraint = $constraint;
     }
 
-    public function isValid($array): bool
+    /**
+     * @param string|null $value
+     */
+    public function isValid(?string $value): bool
     {
         if (!is_array($array)) {
             return false;

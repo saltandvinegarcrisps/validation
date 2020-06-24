@@ -35,7 +35,10 @@ class Numeric extends Assertion implements Constraint
         }
     }
 
-    public function isValid($value): bool
+    /**
+     * @param string|null $value
+     */
+    public function isValid(?string $value): bool
     {
         if (filter_var($value, FILTER_VALIDATE_FLOAT) === false) {
             $this->message = $this->message_type;

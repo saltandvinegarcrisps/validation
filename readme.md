@@ -6,7 +6,7 @@ Symfony like array validation
 
     $validator->addConstraint('first_name', new Validation\Assert\Length(['min' => 3]));
 
-    $validator->addConstraint('last_name', new Validation\Assert\Present);
+    $validator->addConstraint('last_name', new Validation\Assert\Present());
 
     $violations = $validator->validate(['first_name' => 'me']);
 

@@ -7,10 +7,10 @@ interface Constraint
     /**
      * Check is a value passes validation rule
      *
-     * @param mixed
-     * @return bool
+     * @param string|null
+     * @return boolean
      */
-    public function isValid($value): bool;
+    public function isValid(?string $value): bool;
 
     /**
      * Get the error message

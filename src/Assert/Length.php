@@ -45,7 +45,10 @@ class Length extends Assertion implements Constraint
         return $this->max !== null && $length > $this->max;
     }
 
-    public function isValid($value): bool
+    /**
+     * @param string|null $value
+     */
+    public function isValid(?string $value): bool
     {
         if (!is_string($value)) {
             $this->message = $this->message_type;
