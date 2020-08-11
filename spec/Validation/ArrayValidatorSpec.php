@@ -48,7 +48,9 @@ class ArrayValidatorSpec extends ObjectBehavior
             }
         });
 
-        $this->validate($payload)->count()->shouldReturn(1);
+        $validated = $this->validate($payload);
+        $validated->count()->shouldReturn(1);
+        $validated->getMessagesLine()->shouldReturn('bang');
     }
 
     public function it_should_validate_closure_but_passes_with_no_callback_validator_returned()
