@@ -5,7 +5,7 @@ namespace Validation;
 abstract class Assertion
 {
     /**
-     * @var string
+     * @var string $message
      */
     protected $message = ':attribute is not valid';
 
