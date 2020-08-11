@@ -3,6 +3,7 @@
 namespace spec\Validation;
 
 use PhpSpec\ObjectBehavior;
+use Validation\Contracts\CallbackValidator;
 
 class ArrayValidatorSpec extends ObjectBehavior
 {
@@ -32,6 +33,40 @@ class ArrayValidatorSpec extends ObjectBehavior
         ];
 
         $this->addConstraints('foo.bar', [new \Validation\Assert\Present]);
+        $this->validate($payload)->count()->shouldReturn(0);
+    }
+
+    public function it_should_validate_closure()
+    {
+        $payload = [
+            'foo' => 'bar'
+        ];
+
+        $this->addConstraint('foo', function (string $value, CallbackValidator $failure) {
+            if (!is_int($value)) {
+                return $failure->setMessage('bang');
+            }
+        });
+
+        $validated = $this->validate($payload);
+        $validated->count()->shouldReturn(1);
+        $validated->getMessagesLine()->shouldReturn('bang');
+    }
+
+    public function it_should_validate_closure_but_passes_with_no_callback_validator_returned()
+    {
+        $payload = [
+            'foo' => 'bar'
+        ];
+
+        $this->addConstraint('foo', function (string $value, CallbackValidator $failure) {
+            if (is_string($value)) {
+                return;
+            }
+
+            return $failure->setMessage('foo is not a string');
+        });
+
         $this->validate($payload)->count()->shouldReturn(0);
     }
 }

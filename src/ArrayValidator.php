@@ -108,7 +108,7 @@ class ArrayValidator
                     return true;
                 }
 
-                if ($constraint instanceof Constraint && $constraint->isValid($value)) {
+                if ($constraint instanceof Constraint && !$constraint->isValid($value)) {
                     return true;
                 }
 
