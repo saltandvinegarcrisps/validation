@@ -2,6 +2,11 @@
 
 namespace Validation;
 
+use Closure;
+use Nette\Utils\Callback;
+use OutOfBoundsException;
+use Validation\Contracts\CallbackValidator;
+
 class ArrayValidator
 {
     protected $attributes = [];
@@ -19,8 +24,8 @@ class ArrayValidator
     /**
      * Add some constraints to a attribute
      *
-     * @param string
-     * @param array<Constraint>
+     * @param string $attribute
+     * @param array<Constraint> $constraints
      */
     public function addConstraints(string $attribute, array $constraints): void
     {
@@ -43,9 +48,9 @@ class ArrayValidator
      * Add a single constraint to a attribute
      *
      * @param string
-     * @param Constraint
+     * @param Constraint|Closure
      */
-    public function addConstraint(string $attribute, Constraint $constraint): void
+    public function addConstraint(string $attribute, $constraint): void
     {
         $this->attributes[$attribute][] = $constraint;
     }
@@ -53,13 +58,13 @@ class ArrayValidator
     /**
      * Fetches a value from the payload
      *
-     * @param array
-     * @param string
+     * @param array $payload
+     * @param string $index
      * @return mixed
      */
-    protected function value(array $payload, string $key)
+    protected function value(array $payload, string $index)
     {
-        $keys = explode('.', $key);
+        $keys = explode('.', $index);
         $values =& $payload;
 
         foreach ($keys as $key) {
@@ -90,9 +95,24 @@ class ArrayValidator
             // get the value from the payload
             $value = $this->value($payload, $attribute);
 
-            // filter out valid constraints
-            $constraints = array_filter($constraints, function ($constraint) use ($value) {
-                return !$constraint->isValid($value);
+            $closures = array_map(function ($constraint) use ($value) {
+                if ($constraint instanceof Closure) {
+                    return $this->executeClosure($constraint, $value);
+                }
+
+                return $constraint;
+            }, $constraints);
+
+            $constraints = array_filter($closures, static function ($constraint) use ($value): bool {
+                if ($constraint instanceof CallbackValidator) {
+                    return true;
+                }
+
+                if ($constraint instanceof Constraint && $constraint->isValid($value)) {
+                    return true;
+                }
+
+                return false;
             });
 
             // add remaining as violations
@@ -100,5 +120,26 @@ class ArrayValidator
         }
 
         return $violations;
+    }
+
+    protected function executeClosure($constraint, $value)
+    {
+        $failure = new class() implements CallbackValidator {
+            private $message;
+
+            public function setMessage(string $message): CallbackValidator
+            {
+                $this->message = $message;
+
+                return $this;
+            }
+
+            public function getMessage(): string
+            {
+                return $this->message;
+            }
+        };
+
+        return $constraint($value, $failure);
     }
 }

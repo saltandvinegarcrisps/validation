@@ -8,7 +8,7 @@ interface Constraint
      * Check is a value passes validation rule
      *
      * @param mixed
-     * @return boolean
+     * @return bool
      */
     public function isValid($value): bool;
 
