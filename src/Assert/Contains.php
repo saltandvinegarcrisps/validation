@@ -7,8 +7,14 @@ use Validation\Constraint;
 
 class Contains extends Assertion implements Constraint
 {
+    /**
+     * @var string
+     */
     protected $message = ':attribute is not a valid list';
 
+    /**
+     * @var Constraint
+     */
     protected $constraint;
 
     public function __construct(Constraint $constraint, array $options = [])
@@ -22,12 +28,12 @@ class Contains extends Assertion implements Constraint
      */
     public function isValid(?string $value): bool
     {
-        if (!is_array($array)) {
+        if (!is_array($value)) {
             return false;
         }
 
-        foreach ($array as $value) {
-            if (!$this->constraint->isValid($value)) {
+        foreach ($value as $item) {
+            if (!$this->constraint->isValid($item)) {
                 return false;
             }
         }

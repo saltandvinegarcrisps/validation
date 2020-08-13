@@ -7,17 +7,35 @@ use Validation\Constraint;
 
 class Length extends Assertion implements Constraint
 {
+    /**
+     * @var string
+     */
     protected $message;
 
+    /**
+     * @var int
+     */
     protected $min;
 
+    /**
+     * @var int
+     */
     protected $max;
 
-    protected $message_type = ':attribute is not a string';
+    /**
+     * @var string
+     */
+    protected $messageInvalidType = ':attribute is not a string';
 
-    protected $message_lt = ':attribute must be less than or equal to :max characters';
+    /**
+     * @var string
+     */
+    protected $messageInvalidMaxLength = ':attribute must be less than or equal to :max characters';
 
-    protected $message_gt = ':attribute must be greater than or equal to :min characters';
+    /**
+     * @var string
+     */
+    protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min characters';
 
     /**
      * Set options
@@ -26,11 +44,8 @@ class Length extends Assertion implements Constraint
      */
     public function setOptions(array $options): void
     {
-        $properties = ['min', 'max', 'message_type', 'message_lt', 'message_gt'];
-
-        $options = array_intersect_key($options, array_flip($properties));
-
-        foreach ($options as $property => $value) {
+        $properties = ['min', 'max'];
+        foreach (array_intersect_key($options, array_flip($properties)) as $property => $value) {
             $this->$property = $value;
         }
     }
@@ -51,19 +66,19 @@ class Length extends Assertion implements Constraint
     public function isValid(?string $value): bool
     {
         if (!is_string($value)) {
-            $this->message = $this->message_type;
+            $this->message = $this->messageInvalidType;
             return false;
         }
 
         $length = mb_strlen($value);
 
         if ($this->isMin($length)) {
-            $this->message = $this->message_gt;
+            $this->message = $this->messageInvalidMinLength;
             return false;
         }
 
         if ($this->isMax($length)) {
-            $this->message = $this->message_lt;
+            $this->message = $this->messageInvalidMaxLength;
             return false;
         }
 

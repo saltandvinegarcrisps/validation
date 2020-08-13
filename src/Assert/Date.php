@@ -2,20 +2,27 @@
 
 namespace Validation\Assert;
 
-use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Validation\Assertion;
 use Validation\Constraint;
 
-/**
- *
- */
 class Date extends Assertion implements Constraint
 {
+    /**
+     * @var string
+     */
     protected $message = ':attribute is not a valid date';
 
+    /**
+     * @var string
+     */
     protected $format = 'Y-m-d';
 
-    protected $zeros = false;
+    /**
+     * @var bool
+     */
+    protected $allowZeros = false;
 
     /**
      * Set options
@@ -24,9 +31,8 @@ class Date extends Assertion implements Constraint
      */
     public function setOptions(array $options): void
     {
-        $options = array_intersect_key($options, array_flip(['message', 'format', 'zeros']));
-
-        foreach ($options as $property => $value) {
+        $properties = ['message', 'format', 'allowZeros'];
+        foreach (array_intersect_key($options, array_flip($properties)) as $property => $value) {
             $this->$property = $value;
         }
     }
@@ -40,14 +46,14 @@ class Date extends Assertion implements Constraint
             return false;
         }
 
-        $date = DateTime::createFromFormat($this->format, $value);
-
-        if (!$date instanceof DateTime) {
-            return false;
+        if ($this->allowZeros && intval($value) === 0) {
+            return true;
         }
 
-        if ($this->zeros && $date->format('Y') === '-0001') {
-            return true;
+        $date = DateTimeImmutable::createFromFormat($this->format, $value);
+
+        if (!$date instanceof DateTimeInterface) {
+            return false;
         }
 
         return $date->format($this->format) === $value;

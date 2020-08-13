@@ -9,6 +9,9 @@ abstract class Assertion
      */
     protected $message = ':attribute is not valid';
 
+    /**
+     * @param array<string> $options
+     */
     public function __construct(array $options = [])
     {
         $this->setOptions($options);
@@ -17,7 +20,7 @@ abstract class Assertion
     /**
      * Set options for a rule
      *
-     * @param array
+     * @param array<string> $options
      */
     public function setOptions(array $options): void
     {

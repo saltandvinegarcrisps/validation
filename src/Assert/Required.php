@@ -14,6 +14,6 @@ class Required extends Assertion implements Constraint
      */
     public function isValid(?string $value): bool
     {
-        return null !== $value && '' !== $value && '0' !== $value;
+        return null !== $value && '' !== $value;
     }
 }

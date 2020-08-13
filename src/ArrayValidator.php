@@ -9,12 +9,15 @@ use Validation\Contracts\CallbackValidator;
 
 class ArrayValidator
 {
+    /**
+     * @var array<string, array<Constraint>>
+     */
     protected $attributes = [];
 
     /**
      * Get the constraints
      *
-     * @return array<Constraint>
+     * @return array<string, array<Constraint>>
      */
     public function getConstraints(): array
     {

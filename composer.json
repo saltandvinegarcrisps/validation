@@ -3,6 +3,8 @@
     "description": "Input validator",
     "license": "Apache-2.0",
     "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Kieron",
@@ -14,12 +16,12 @@
     "require": {
         "php": ">=7.1",
         "ext-mbstring": "*",
-        "egulias/email-validator": "^2"
+        "egulias/email-validator": "@stable"
     },
     "require-dev": {
-        "phpspec/phpspec": "^3",
-        "phpstan/phpstan": "^0",
-        "friendsofphp/php-cs-fixer": "^2"
+        "phpspec/phpspec": "@stable",
+        "phpstan/phpstan": "@stable",
+        "friendsofphp/php-cs-fixer": "@stable"
     },
     "autoload": {
         "psr-4": {

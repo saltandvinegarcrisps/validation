@@ -7,17 +7,35 @@ use Validation\Constraint;
 
 class Numeric extends Assertion implements Constraint
 {
+    /**
+     * @var string
+     */
     protected $message;
 
+    /**
+     * @var int
+     */
     protected $min;
 
+    /**
+     * @var int
+     */
     protected $max;
 
-    protected $message_type = ':attribute is not a valid number';
+    /**
+     * @var string
+     */
+    protected $messageInvalidType = ':attribute is not a valid number';
 
-    protected $message_lt = ':attribute must be less than or equal to :max';
+    /**
+     * @var string
+     */
+    protected $messageInvalidMaxLength = ':attribute must be less than or equal to :max';
 
-    protected $message_gt = ':attribute must be greater than or equal to :min';
+    /**
+     * @var string
+     */
+    protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min';
 
     /**
      * Set options
@@ -26,11 +44,8 @@ class Numeric extends Assertion implements Constraint
      */
     public function setOptions(array $options): void
     {
-        $properties = ['min', 'max', 'message_type', 'message_lt', 'message_gt'];
-
-        $options = array_intersect_key($options, array_flip($properties));
-
-        foreach ($options as $property => $value) {
+        $properties = ['min', 'max'];
+        foreach (array_intersect_key($options, array_flip($properties)) as $property => $value) {
             $this->$property = $value;
         }
     }
@@ -41,17 +56,17 @@ class Numeric extends Assertion implements Constraint
     public function isValid(?string $value): bool
     {
         if (filter_var($value, FILTER_VALIDATE_FLOAT) === false) {
-            $this->message = $this->message_type;
+            $this->message = $this->messageInvalidType;
             return false;
         }
 
         if ($this->min !== null && $value < $this->min) {
-            $this->message = $this->message_gt;
+            $this->message = $this->messageInvalidMinLength;
             return false;
         }
 
         if ($this->max !== null && $value > $this->max) {
-            $this->message = $this->message_lt;
+            $this->message = $this->messageInvalidMaxLength;
             return false;
         }
 

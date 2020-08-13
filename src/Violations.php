@@ -6,6 +6,9 @@ use Countable;
 
 class Violations implements Countable
 {
+    /**
+     * @var array<string, array<Constraint>>
+     */
     protected $attributes = [];
 
     /**
@@ -33,7 +36,7 @@ class Violations implements Countable
     /**
      * Get array of messages for each attribute
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function getMessages(): array
     {
