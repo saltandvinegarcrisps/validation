@@ -66,9 +66,9 @@ class ArrayValidator
      *
      * @param array $payload
      * @param string $index
-     * @return array|string|null
+     * @return string|null
      */
-    protected function value(array $payload, string $index)
+    protected function value(array $payload, string $index): ?string
     {
         $keys = explode('.', $index);
         $values =& $payload;
@@ -81,7 +81,7 @@ class ArrayValidator
             }
         }
 
-        return $values;
+        return (string) $values;
     }
 
     /**
