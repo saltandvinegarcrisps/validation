@@ -4,18 +4,19 @@ namespace spec\Validation;
 
 use PhpSpec\ObjectBehavior;
 use Validation\Contracts\CallbackValidator;
+use Validation\Contracts\Constraint;
 
 class ArrayValidatorSpec extends ObjectBehavior
 {
-    public function it_should_add_constraints()
+    public function it_should_add_constraints(Constraint $constraint)
     {
-        $this->addConstraint('foo', new \Validation\Assert\Present);
+        $this->addConstraint('foo', $constraint);
         $this->getConstraints()->shouldHaveKey('foo');
     }
 
-    public function it_should_add_many_constraints()
+    public function it_should_add_many_constraints(Constraint $constraint)
     {
-        $this->addConstraints('foo', [new \Validation\Assert\Present]);
+        $this->addConstraints('foo', [$constraint]);
         $this->getConstraints()->shouldHaveKey('foo');
     }
 
@@ -24,7 +25,7 @@ class ArrayValidatorSpec extends ObjectBehavior
         $this->validate(['foo' => 'bar'])->shouldReturnAnInstanceOf(\Validation\Violations::class);
     }
 
-    public function it_should_return_validate_nested()
+    public function it_should_return_validate_nested(Constraint $constraint)
     {
         $payload = [
             'foo' => [
@@ -32,8 +33,21 @@ class ArrayValidatorSpec extends ObjectBehavior
             ],
         ];
 
-        $this->addConstraints('foo.bar', [new \Validation\Assert\Present]);
+        $constraint->isValid('baz')->shouldBeCalled()->willReturn(true);
+        $this->addConstraints('foo.bar', [$constraint]);
         $this->validate($payload)->count()->shouldReturn(0);
+    }
+
+    public function it_should_fail_incomplete_indexes(Constraint $constraint)
+    {
+        $payload = [
+            'foo' => [
+                'bar' => 'baz',
+            ],
+        ];
+
+        $this->addConstraints('foo', [$constraint]);
+        $this->shouldThrow(\UnexpectedValueException::class)->duringValidate($payload);
     }
 
     public function it_should_validate_closure()

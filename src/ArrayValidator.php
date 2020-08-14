@@ -81,7 +81,11 @@ class ArrayValidator
             }
         }
 
-        return (string) $values;
+        if (is_array($values)) {
+            throw new UnexpectedValueException(sprintf('Index "%s" must resolve to a single value, array found', $index));
+        }
+
+        return null === $values ? $values : (string) $values;
     }
 
     /**
