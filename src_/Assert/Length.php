@@ -3,7 +3,7 @@
 namespace Validation\Assert;
 
 use Validation\Assertion;
-use Validation\Contracts\Constraint;
+use Validation\Constraint;
 
 class Length extends Assertion implements Constraint
 {
@@ -37,6 +37,19 @@ class Length extends Assertion implements Constraint
      */
     protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min characters';
 
+    /**
+     * Set options
+     *
+     * @param array
+     */
+    public function setOptions(array $options): void
+    {
+        $properties = ['min', 'max'];
+        foreach (array_intersect_key($options, array_flip($properties)) as $property => $value) {
+            $this->$property = $value;
+        }
+    }
+
     protected function isMin(int $length): bool
     {
         return $this->min !== null && $length < $this->min;
@@ -47,6 +60,9 @@ class Length extends Assertion implements Constraint
         return $this->max !== null && $length > $this->max;
     }
 
+    /**
+     * @param string|null $value
+     */
     public function isValid(?string $value): bool
     {
         if (!is_string($value)) {

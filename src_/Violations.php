@@ -7,7 +7,7 @@ use Countable;
 class Violations implements Countable
 {
     /**
-     * @var array<string, array<Contracts\ConstraintMessage>>
+     * @var array<string, array<Constraint>>
      */
     protected $attributes = [];
 
@@ -15,24 +15,11 @@ class Violations implements Countable
      * Add a violation
      *
      * @param string $attribute
-     * @param array<Contracts\ConstraintMessage> $constraints
+     * @param array<Constraint> $constraints
      */
     public function add(string $attribute, array $constraints): void
     {
-        foreach ($constraints as $constraint) {
-            $this->append($attribute, $constraint);
-        }
-    }
-
-    /**
-     * Append a violation
-     *
-     * @param string $attribute
-     * @param Contracts\ConstraintMessage $constraint
-     */
-    public function append(string $attribute, Contracts\ConstraintMessage $constraint): void
-    {
-        $this->attributes[$attribute][] = $constraint;
+        $this->attributes[$attribute] = $constraints;
     }
 
     /**

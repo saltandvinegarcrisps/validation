@@ -3,7 +3,7 @@
 namespace Validation\Assert;
 
 use Validation\Assertion;
-use Validation\Constraint;
+use Validation\Contracts\Constraint;
 
 class Present extends Assertion implements Constraint
 {

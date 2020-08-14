@@ -3,7 +3,7 @@
 namespace Validation\Assert;
 
 use Validation\Assertion;
-use Validation\Contracts\Constraint;
+use Validation\Constraint;
 
 class Required extends Assertion implements Constraint
 {

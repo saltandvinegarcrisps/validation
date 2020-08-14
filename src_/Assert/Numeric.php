@@ -3,7 +3,7 @@
 namespace Validation\Assert;
 
 use Validation\Assertion;
-use Validation\Contracts\Constraint;
+use Validation\Constraint;
 
 class Numeric extends Assertion implements Constraint
 {
@@ -36,6 +36,19 @@ class Numeric extends Assertion implements Constraint
      * @var string
      */
     protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min';
+
+    /**
+     * Set options
+     *
+     * @param array
+     */
+    public function setOptions(array $options): void
+    {
+        $properties = ['min', 'max'];
+        foreach (array_intersect_key($options, array_flip($properties)) as $property => $value) {
+            $this->$property = $value;
+        }
+    }
 
     /**
      * @param string|null $value

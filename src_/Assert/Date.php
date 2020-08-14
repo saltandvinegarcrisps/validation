@@ -5,7 +5,7 @@ namespace Validation\Assert;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Validation\Assertion;
-use Validation\Contracts\Constraint;
+use Validation\Constraint;
 
 class Date extends Assertion implements Constraint
 {
@@ -23,6 +23,19 @@ class Date extends Assertion implements Constraint
      * @var bool
      */
     protected $allowZeros = false;
+
+    /**
+     * Set options
+     *
+     * @param array
+     */
+    public function setOptions(array $options): void
+    {
+        $properties = ['message', 'format', 'allowZeros'];
+        foreach (array_intersect_key($options, array_flip($properties)) as $property => $value) {
+            $this->$property = $value;
+        }
+    }
 
     /**
      * @param string|null $value

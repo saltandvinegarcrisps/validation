@@ -3,19 +3,19 @@
 namespace Validation;
 
 use Closure;
-use UnexpectedValueException;
+use Validation\Contracts\CallbackValidator;
 
 class ArrayValidator
 {
     /**
-     * @var array<string, array<Contracts\Constraint>>
+     * @var array<string, array<Constraint>>
      */
     protected $attributes = [];
 
     /**
      * Get the constraints
      *
-     * @return array<string, array<Contracts\Constraint|Closure>>
+     * @return array<string, array<Constraint>>
      */
     public function getConstraints(): array
     {
@@ -26,7 +26,7 @@ class ArrayValidator
      * Add some constraints to a attribute
      *
      * @param string $attribute
-     * @param array<Contracts\Constraint|Closure> $constraints
+     * @param array<Constraint> $constraints
      */
     public function addConstraints(string $attribute, array $constraints): void
     {
@@ -49,15 +49,10 @@ class ArrayValidator
      * Add a single constraint to a attribute
      *
      * @param string
-     * @param Contracts\Constraint|Closure
+     * @param Constraint|Closure
      */
     public function addConstraint(string $attribute, $constraint): void
     {
-        // remove when union types are added
-        if (!$constraint instanceof Contracts\Constraint && !$constraint instanceof Closure) {
-            throw new UnexpectedValueException('Constraint must be either a instance of a Constraint or a Closure');
-        }
-
         $this->attributes[$attribute][] = $constraint;
     }
 
@@ -66,7 +61,7 @@ class ArrayValidator
      *
      * @param array $payload
      * @param string $index
-     * @return array|string|null
+     * @return mixed
      */
     protected function value(array $payload, string $index)
     {
@@ -98,33 +93,54 @@ class ArrayValidator
         }
 
         foreach ($this->attributes as $attribute => $constraints) {
-            $violations->add($attribute, $this->resolveConstraints($this->value($payload, $attribute), $constraints));
+            // get the value from the payload
+            $value = $this->value($payload, $attribute);
+
+            $closures = array_map(function ($constraint) use ($value) {
+                if ($constraint instanceof Closure) {
+                    return $this->executeClosure($constraint, $value);
+                }
+
+                return $constraint;
+            }, $constraints);
+
+            $constraints = array_filter($closures, static function ($constraint) use ($value): bool {
+                if ($constraint instanceof CallbackValidator) {
+                    return true;
+                }
+
+                if ($constraint instanceof Constraint && !$constraint->isValid($value)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            // add remaining as violations
+            $violations->add($attribute, $constraints);
         }
 
         return $violations;
     }
 
-    /**
-     * Resolve constraints against a value to return an array of failures
-     *
-     * @return array<Contracts\ConstraintMessage>
-     */
-    protected function resolveConstraints($value, array $constraints): array
+    protected function executeClosure($constraint, $value)
     {
-        $resolve = static function (array $failures, $constraint) use ($value) {
-            if ($constraint instanceof Closure) {
-                $result = $constraint($value, new class() implements Contracts\CallbackValidator {
-                    use Traits\ConstraintMutableMessage;
-                });
-                if ($result instanceof Contracts\ConstraintMessage) {
-                    $failures[] = $result;
-                }
-            } elseif (!$constraint->isValid($value)) {
-                $failures[] = $constraint;
+        $failure = new class() implements CallbackValidator {
+            private $message;
+
+            public function setMessage(string $message): CallbackValidator
+            {
+                $this->message = $message;
+
+                return $this;
             }
-            return $failures;
+
+            public function getMessage(): string
+            {
+                return $this->message;
+            }
         };
 
-        return array_reduce($constraints, $resolve, []);
+        return $constraint($value, $failure);
     }
 }

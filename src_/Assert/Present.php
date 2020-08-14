@@ -3,17 +3,17 @@
 namespace Validation\Assert;
 
 use Validation\Assertion;
-use Validation\Contracts\Constraint;
+use Validation\Constraint;
 
-class Required extends Assertion implements Constraint
+class Present extends Assertion implements Constraint
 {
-    protected $message = ':attribute is required';
+    protected $message = ':attribute must be present';
 
     /**
      * @param string|null $value
      */
     public function isValid(?string $value): bool
     {
-        return null !== $value && '' !== $value;
+        return null !== $value;
     }
 }

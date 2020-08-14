@@ -5,7 +5,7 @@ namespace Validation\Assert;
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\RFCValidation;
 use Validation\Assertion;
-use Validation\Contracts\Constraint;
+use Validation\Constraint;
 
 class Email extends Assertion implements Constraint
 {

@@ -2,11 +2,12 @@
 
 namespace Validation;
 
-use UnexpectedValueException;
-
-abstract class Assertion implements Contracts\ConstraintMessage
+abstract class Assertion
 {
-    use Traits\ConstraintMessage;
+    /**
+     * @var string $message
+     */
+    protected $message = ':attribute is not valid';
 
     /**
      * @param array<string> $options
@@ -23,11 +24,21 @@ abstract class Assertion implements Contracts\ConstraintMessage
      */
     public function setOptions(array $options): void
     {
+        $options = array_intersect_key($options, array_flip(['message']));
+
         foreach ($options as $property => $value) {
-            if (!property_exists($this, $property)) {
-                throw new UnexpectedValueException(sprintf('Undefined property "%s" on %s', $property, get_class($this)));
-            }
             $this->$property = $value;
         }
+    }
+
+    /**
+     * Get the default error message from a assertion
+     *
+     * @param string
+     * @return string
+     */
+    public function getMessage(string $attribute): string
+    {
+        return str_replace(':attribute', $attribute, $this->message);
     }
 }
