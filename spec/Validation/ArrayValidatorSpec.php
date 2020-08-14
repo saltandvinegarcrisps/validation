@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace spec\Validation;
 
@@ -39,7 +39,7 @@ class ArrayValidatorSpec extends ObjectBehavior
     public function it_should_validate_closure()
     {
         $payload = [
-            'foo' => 'bar'
+            'foo' => 'bar',
         ];
 
         $this->addConstraint('foo', function (string $value, CallbackValidator $failure) {
@@ -56,7 +56,7 @@ class ArrayValidatorSpec extends ObjectBehavior
     public function it_should_validate_closure_but_passes_with_no_callback_validator_returned()
     {
         $payload = [
-            'foo' => 'bar'
+            'foo' => 'bar',
         ];
 
         $this->addConstraint('foo', function (string $value, CallbackValidator $failure) {

@@ -3,8 +3,6 @@
 namespace Validation;
 
 use Closure;
-use Nette\Utils\Callback;
-use OutOfBoundsException;
 use Validation\Contracts\CallbackValidator;
 
 class ArrayValidator

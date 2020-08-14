@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace spec\Validation\Assert;
 
@@ -13,17 +13,7 @@ class EmailSpec extends ObjectBehavior
 
     public function it_should_not_validate_numbers()
     {
-        $this->isValid(1.1)->shouldReturn(false);
-    }
-
-    public function it_should_not_validate_arrays()
-    {
-        $this->isValid([])->shouldReturn(false);
-    }
-
-    public function it_should_not_validate_objects()
-    {
-        $this->isValid(new \StdClass)->shouldReturn(false);
+        $this->isValid('1.1')->shouldReturn(false);
     }
 
     public function it_should_not_validate_nulls()

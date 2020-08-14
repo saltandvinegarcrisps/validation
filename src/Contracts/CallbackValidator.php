@@ -3,7 +3,6 @@
 
 namespace Validation\Contracts;
 
-
 interface CallbackValidator
 {
     public function setMessage(string $message): self;
