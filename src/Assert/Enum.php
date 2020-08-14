@@ -23,6 +23,7 @@ class Enum extends Assertion implements Constraint
     public function __construct(array $values)
     {
         $this->message = ':attribute can only be '.implode(', ', $values);
+        $this->values = $values;
     }
 
     /**
