@@ -4,5 +4,7 @@ parameters:
         - %currentWorkingDirectory%/src
     bootstrapFiles:
         - %currentWorkingDirectory%/vendor/autoload.php
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#PHPDoc tag#'
+        - '#no typehint specified#'

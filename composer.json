@@ -38,6 +38,10 @@
             "./bin/php-cs-fixer fix src/ --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline_array",
             "./bin/php-cs-fixer fix spec/ --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline_array"
         ],
+        "test": [
+            "phpstan analyse",
+            "phpspec run"
+        ],
         "uninstall": [
             "rm -rf ./bin",
             "rm -rf ./vendor",
