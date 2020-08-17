@@ -32,7 +32,7 @@ class DateSpec extends ObjectBehavior
 
     public function it_should_validate_zero_dates_when_specified()
     {
-        $this->beConstructedWith(['format' => 'Y-m-d', 'allowZeros' => true]);
+        $this->beConstructedWith(['format' => 'Y-m-d', 'allow_zeros' => true]);
         $this->isValid('0000-00-00')->shouldReturn(true);
     }
 

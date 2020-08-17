@@ -23,11 +23,29 @@ abstract class Assertion implements Contracts\ConstraintMessage
      */
     public function setOptions(array $options): void
     {
-        foreach ($options as $property => $value) {
-            if (!property_exists($this, $property)) {
-                throw new UnexpectedValueException(sprintf('Undefined property "%s" on %s', $property, get_class($this)));
-            }
-            $this->$property = $value;
+        foreach ($options as $propertyName => $value) {
+            $this->setOption($propertyName, $value);
         }
+    }
+
+    /**
+     * Set a option for a rule
+     */
+    public function setOption(string $propertyName, $value): void
+    {
+        if (property_exists($this, $propertyName)) {
+            $this->$propertyName = $value;
+            return;
+        }
+
+        $propertyNameCased = str_replace('_', '', ucwords($propertyName, '_'));
+        $propertyCamelName = strtolower($propertyNameCased[0]).substr($propertyNameCased, 1);
+
+        if (property_exists($this, $propertyCamelName)) {
+            $this->$propertyCamelName = $value;
+            return;
+        }
+
+        throw new UnexpectedValueException(sprintf('Undefined property name "%s" on %s', $propertyName, get_class($this)));
     }
 }
