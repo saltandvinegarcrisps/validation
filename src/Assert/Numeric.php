@@ -37,10 +37,7 @@ class Numeric extends Assertion implements Constraint
      */
     protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min';
 
-    /**
-     * @param string|null $value
-     */
-    public function isValid(?string $value): bool
+    public function isValid($value): bool
     {
         if (filter_var($value, FILTER_VALIDATE_FLOAT) === false) {
             $this->message = $this->messageInvalidType;

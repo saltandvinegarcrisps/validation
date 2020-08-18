@@ -11,10 +11,7 @@ class Email extends Assertion implements Constraint
 {
     protected $message = ':attribute is not a valid email address';
 
-    /**
-     * @param string|null $value
-     */
-    public function isValid(?string $value): bool
+    public function isValid($value): bool
     {
         if (!is_string($value)) {
             return false;

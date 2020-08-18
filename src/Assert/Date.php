@@ -24,10 +24,7 @@ class Date extends Assertion implements Constraint
      */
     protected $allowZeros = false;
 
-    /**
-     * @param string|null $value
-     */
-    public function isValid(?string $value): bool
+    public function isValid($value): bool
     {
         if (!is_string($value)) {
             return false;

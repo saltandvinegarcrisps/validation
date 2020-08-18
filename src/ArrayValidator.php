@@ -8,14 +8,12 @@ use UnexpectedValueException;
 class ArrayValidator
 {
     /**
-     * @var array<string, array<Contracts\Constraint>>
+     * @var array
      */
     protected $attributes = [];
 
     /**
      * Get the constraints
-     *
-     * @return array<string, array<Contracts\Constraint|Closure>>
      */
     public function getConstraints(): array
     {
@@ -24,9 +22,6 @@ class ArrayValidator
 
     /**
      * Add some constraints to a attribute
-     *
-     * @param string $attribute
-     * @param array<Contracts\Constraint|Closure> $constraints
      */
     public function addConstraints(string $attribute, array $constraints): void
     {
@@ -37,8 +32,6 @@ class ArrayValidator
 
     /**
      * Removes constraints for a attribute
-     *
-     * @param string
      */
     public function removeConstraints(string $attribute): void
     {
@@ -63,10 +56,6 @@ class ArrayValidator
 
     /**
      * Fetches a value from the payload
-     *
-     * @param array $payload
-     * @param string $index
-     * @return string|null
      */
     protected function value(array $payload, string $index): ?string
     {

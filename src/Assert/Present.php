@@ -9,10 +9,7 @@ class Present extends Assertion implements Constraint
 {
     protected $message = ':attribute must be present';
 
-    /**
-     * @param string|null $value
-     */
-    public function isValid(?string $value): bool
+    public function isValid($value): bool
     {
         return null !== $value;
     }

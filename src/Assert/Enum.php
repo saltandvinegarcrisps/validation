@@ -26,10 +26,7 @@ class Enum extends Assertion implements Constraint
         $this->values = $values;
     }
 
-    /**
-     * @param string|null $value
-     */
-    public function isValid(?string $value): bool
+    public function isValid($value): bool
     {
         return in_array($value, $this->values, true);
     }

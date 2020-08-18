@@ -9,10 +9,7 @@ class Required extends Assertion implements Constraint
 {
     protected $message = ':attribute is required';
 
-    /**
-     * @param string|null $value
-     */
-    public function isValid(?string $value): bool
+    public function isValid($value): bool
     {
         return null !== $value && '' !== $value;
     }

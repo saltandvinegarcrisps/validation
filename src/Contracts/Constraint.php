@@ -4,5 +4,11 @@ namespace Validation\Contracts;
 
 interface Constraint extends ConstraintMessage
 {
-    public function isValid(?string $value): bool;
+    /**
+     * Return true if the value passes constraint rule
+     *
+     * @param string|array|null $value
+     * @return bool
+     */
+    public function isValid($value): bool;
 }

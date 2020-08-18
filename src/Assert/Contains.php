@@ -5,7 +5,7 @@ namespace Validation\Assert;
 use Validation\Assertion;
 use Validation\Contracts\Constraint;
 
-class Optional extends Assertion implements Constraint
+class Contains extends Assertion implements Constraint
 {
     /**
      * @var Constraint
@@ -25,8 +25,14 @@ class Optional extends Assertion implements Constraint
         return $this->constraint->getMessage($attribute);
     }
 
-    public function isValid($value): bool
+    public function isValid($values): bool
     {
-        return null === $value || $this->constraint->isValid($value);
+        if (!is_array($values) || !count($values)) {
+            return false;
+        }
+
+        return array_reduce($values, function (bool $carry, $value) {
+            return $this->constraint->isValid($value) ? $carry : false;
+        }, true);
     }
 }
