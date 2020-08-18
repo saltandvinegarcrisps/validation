@@ -59,22 +59,16 @@ class ArrayValidator
      */
     protected function value(array $payload, string $index): ?string
     {
-        $keys = explode('.', $index);
-        $values =& $payload;
+        $item =& $payload;
 
-        foreach ($keys as $key) {
-            if (is_array($values) && array_key_exists($key, $values)) {
-                $values =& $values[$key];
-            } else {
+        foreach (explode('.', $index) as $key) {
+            if (!is_array($item) || !array_key_exists($key, $item)) {
                 return null;
             }
+            $item =& $item[$key];
         }
 
-        if (is_array($values)) {
-            throw new UnexpectedValueException(sprintf('Index "%s" must resolve to a single value, array found', $index));
-        }
-
-        return null === $values ? $values : (string) $values;
+        return $item;
     }
 
     /**

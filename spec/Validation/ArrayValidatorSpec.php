@@ -38,18 +38,6 @@ class ArrayValidatorSpec extends ObjectBehavior
         $this->validate($payload)->count()->shouldReturn(0);
     }
 
-    public function it_should_fail_incomplete_indexes(Constraint $constraint)
-    {
-        $payload = [
-            'foo' => [
-                'bar' => 'baz',
-            ],
-        ];
-
-        $this->addConstraints('foo', [$constraint]);
-        $this->shouldThrow(\UnexpectedValueException::class)->duringValidate($payload);
-    }
-
     public function it_should_validate_closure()
     {
         $payload = [
