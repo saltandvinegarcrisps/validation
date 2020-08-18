@@ -56,23 +56,6 @@ class ArrayValidator
     }
 
     /**
-     * Fetches a value from the payload
-     */
-    protected function value(array $payload, string $index): ?string
-    {
-        $item =& $payload;
-
-        foreach (explode('.', $index) as $key) {
-            if (!is_array($item) || !array_key_exists($key, $item)) {
-                return null;
-            }
-            $item =& $item[$key];
-        }
-
-        return $item;
-    }
-
-    /**
      * Validate a payload
      *
      * @param array
