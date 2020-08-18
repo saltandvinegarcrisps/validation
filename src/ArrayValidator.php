@@ -3,6 +3,7 @@
 namespace Validation;
 
 use Closure;
+use Codin\Dot;
 use UnexpectedValueException;
 
 class ArrayValidator
@@ -85,7 +86,7 @@ class ArrayValidator
         }
 
         foreach ($this->attributes as $attribute => $constraints) {
-            $violations->add($attribute, $this->resolveConstraints($this->value($payload, $attribute), $constraints));
+            $violations->add($attribute, $this->resolveConstraints((new Dot($payload))->get($attribute), $constraints));
         }
 
         return $violations;

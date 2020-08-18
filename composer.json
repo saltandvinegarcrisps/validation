@@ -16,6 +16,7 @@
     "require": {
         "php": ">=7.3",
         "ext-mbstring": "*",
+        "codin/dot": "@stable",
         "egulias/email-validator": "@stable"
     },
     "require-dev": {
