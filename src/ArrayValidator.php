@@ -3,7 +3,7 @@
 namespace Validation;
 
 use Closure;
-use Codin\Dot;
+use Codin\Dot\Dot;
 use UnexpectedValueException;
 
 class ArrayValidator
