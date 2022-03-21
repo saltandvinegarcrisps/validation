@@ -12,6 +12,8 @@ use Validation\Contracts\Constraint;
 class Email extends Assertion implements Constraint
 {
     protected $message = ':attribute is not a valid email address';
+    
+    protected $dns = false;
 
     public function isValid($value): bool
     {
