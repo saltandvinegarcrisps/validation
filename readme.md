@@ -2,28 +2,34 @@
 
 Symfony like array validation
 
-    $validator = new Validation\ArrayValidator();
+```php
+$validator = new Validation\ArrayValidator();
 
-    $validator->addConstraint('first_name', new Validation\Assert\Length(['min' => 3]));
+$validator->addConstraint('first_name', new Validation\Assert\Length(['min' => 3]));
 
-    $validator->addConstraint('last_name', new Validation\Assert\Present());
+$validator->addConstraint('last_name', new Validation\Assert\Present());
 
-    $violations = $validator->validate(['first_name' => 'me']);
+// validate email address with MX lookup
+$validator->addConstraint('email', new Validation\Assert\Email(['dns' => true]));
 
-    echo $violations->count(); // 1
-    echo count($violations); // 1
+$violations = $validator->validate(['first_name' => 'me']);
 
-    print_r($violations->getMessages());
+echo $violations->count(); // 1
+echo count($violations); // 1
 
-    Array
-    (
-        [first_name] => Array
-            (
-                [0] => first name must be greater than or equal to 3 characters
-            )
+print_r($violations->getMessages());
 
-        [last_name] => Array
-            (
-                [0] => last name must be present
-            )
-    )
+Array
+(
+    [first_name] => Array
+        (
+            [0] => first name must be greater than or equal to 3 characters
+        )
+
+    [last_name] => Array
+        (
+            [0] => last name must be present
+        )
+    ...etc
+)
+```
