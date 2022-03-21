@@ -15,6 +15,8 @@ class Email extends Assertion implements Constraint
     
     protected $dns = false;
 
+    protected $dns = false;
+
     public function isValid($value): bool
     {
         if (!is_string($value)) {
