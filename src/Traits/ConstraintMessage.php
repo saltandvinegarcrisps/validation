@@ -4,7 +4,7 @@ namespace Validation\Traits;
 
 trait ConstraintMessage
 {
-    protected $message = ':attribute is not valid';
+    protected string $message = ':attribute is not valid';
 
     public function getMessage(string $attribute): string
     {

@@ -25,6 +25,9 @@ abstract class Assertion implements Contracts\ConstraintMessage
 
     /**
      * Set a option for a rule
+     *
+     * @param string $propertyName
+     * @param string|int|bool $value
      */
     public function setOption(string $propertyName, $value): void
     {

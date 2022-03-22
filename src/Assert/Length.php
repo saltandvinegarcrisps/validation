@@ -7,35 +7,17 @@ use Validation\Contracts\Constraint;
 
 class Length extends Assertion implements Constraint
 {
-    /**
-     * @var string
-     */
-    protected $message;
+    protected string $message;
 
-    /**
-     * @var int
-     */
-    protected $min;
+    protected ?int $min = null;
 
-    /**
-     * @var int
-     */
-    protected $max;
+    protected ?int $max = null;
 
-    /**
-     * @var string
-     */
-    protected $messageInvalidType = ':attribute is not a string';
+    protected string $messageInvalidType = ':attribute is not a string';
 
-    /**
-     * @var string
-     */
-    protected $messageInvalidMaxLength = ':attribute must be less than or equal to :max characters';
+    protected string $messageInvalidMaxLength = ':attribute must be less than or equal to :max characters';
 
-    /**
-     * @var string
-     */
-    protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min characters';
+    protected string $messageInvalidMinLength = ':attribute must be greater than or equal to :min characters';
 
     protected function isMin(int $length): bool
     {

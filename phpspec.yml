@@ -1,0 +1,11 @@
+formatter.name: pretty
+verbose: true
+stop_on_failure: true
+code_generation: false
+suites:
+    default:
+        src_path: ./src
+extensions:
+  FriendsOfPhpSpec\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format:
+      - html

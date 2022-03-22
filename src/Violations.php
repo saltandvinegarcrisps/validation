@@ -9,7 +9,7 @@ class Violations implements Countable
     /**
      * @var array<string, array<Contracts\ConstraintMessage>>
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * Add a violation
@@ -37,9 +37,6 @@ class Violations implements Countable
 
     /**
      * Format into more readable words
-     *
-     * @param string
-     * @return string
      */
     protected function toWords(string $attribute): string
     {

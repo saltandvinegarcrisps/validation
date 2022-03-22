@@ -11,11 +11,9 @@ use Validation\Contracts\Constraint;
 
 class Email extends Assertion implements Constraint
 {
-    protected $message = ':attribute is not a valid email address';
+    protected string $message = ':attribute is not a valid email address';
     
-    protected $dns = false;
-
-    protected $dns = false;
+    protected bool $dns = false;
 
     public function isValid($value): bool
     {
@@ -28,7 +26,7 @@ class Email extends Assertion implements Constraint
         if ($this->dns) {
             $validation = new MultipleValidationWithAnd([
                 new RFCValidation(),
-                new DNSCheckValidation()
+                new DNSCheckValidation(),
             ]);
         } else {
             $validation = new RFCValidation();
@@ -37,4 +35,3 @@ class Email extends Assertion implements Constraint
         return $validator->isValid($value, $validation);
     }
 }
-

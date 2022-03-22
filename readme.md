@@ -1,5 +1,9 @@
 ## Validator
 
+![version](https://img.shields.io/github/v/tag/rwarasaurus/validation)
+![workflow](https://img.shields.io/github/workflow/status/rwarasaurus/validation/Composer)
+![license](https://img.shields.io/github/license/rwarasaurus/validation)
+
 Symfony like array validation
 
 ```php

@@ -7,14 +7,8 @@ use Validation\Contracts\Constraint;
 
 class Contains extends Assertion implements Constraint
 {
-    /**
-     * @var Constraint
-     */
-    protected $constraint;
+    protected Constraint $constraint;
 
-    /**
-     * @param array<string> $values
-     */
     public function __construct(Constraint $constraint)
     {
         $this->constraint = $constraint;

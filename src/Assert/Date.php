@@ -9,20 +9,11 @@ use Validation\Contracts\Constraint;
 
 class Date extends Assertion implements Constraint
 {
-    /**
-     * @var string
-     */
-    protected $message = ':attribute is not a valid date';
+    protected string $message = ':attribute is not a valid date';
 
-    /**
-     * @var string
-     */
-    protected $format = 'Y-m-d';
+    protected string $format = 'Y-m-d';
 
-    /**
-     * @var bool
-     */
-    protected $allowZeros = false;
+    protected bool $allowZeros = false;
 
     public function isValid($value): bool
     {

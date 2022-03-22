@@ -7,35 +7,17 @@ use Validation\Contracts\Constraint;
 
 class Numeric extends Assertion implements Constraint
 {
-    /**
-     * @var string
-     */
-    protected $message;
+    protected string $message;
 
-    /**
-     * @var int
-     */
-    protected $min;
+    protected ?int $min = null;
 
-    /**
-     * @var int
-     */
-    protected $max;
+    protected ?int $max = null;
 
-    /**
-     * @var string
-     */
-    protected $messageInvalidType = ':attribute is not a valid number';
+    protected string $messageInvalidType = ':attribute is not a valid number';
 
-    /**
-     * @var string
-     */
-    protected $messageInvalidMaxLength = ':attribute must be less than or equal to :max';
+    protected string $messageInvalidMaxLength = ':attribute must be less than or equal to :max';
 
-    /**
-     * @var string
-     */
-    protected $messageInvalidMinLength = ':attribute must be greater than or equal to :min';
+    protected string $messageInvalidMinLength = ':attribute must be greater than or equal to :min';
 
     public function isValid($value): bool
     {

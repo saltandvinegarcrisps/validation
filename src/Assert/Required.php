@@ -7,7 +7,7 @@ use Validation\Contracts\Constraint;
 
 class Required extends Assertion implements Constraint
 {
-    protected $message = ':attribute is required';
+    protected string $message = ':attribute is required';
 
     public function isValid($value): bool
     {

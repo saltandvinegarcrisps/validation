@@ -1,7 +1,7 @@
 {
     "name": "rwarasaurus/validation",
     "description": "Input validator",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "type": "library",
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -20,9 +20,10 @@
         "egulias/email-validator": "@stable"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "@stable",
+        "friends-of-phpspec/phpspec-code-coverage": "@stable",
         "phpspec/phpspec": "@stable",
-        "phpstan/phpstan": "@stable",
-        "friendsofphp/php-cs-fixer": "@stable"
+        "phpstan/phpstan": "@stable"
     },
     "autoload": {
         "psr-4": {
@@ -36,12 +37,11 @@
     },
     "scripts": {
         "psr": [
-            "./bin/php-cs-fixer fix src/ --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline_array",
-            "./bin/php-cs-fixer fix spec/ --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline_array"
+            "./bin/php-cs-fixer fix . --allow-risky=yes --rules=@PSR2,no_unused_imports,ordered_imports,ordered_interfaces,single_quote,trailing_comma_in_multiline"
         ],
         "test": [
-            "phpstan analyse",
-            "phpspec run"
+            "phpstan analyse --no-progress --no-ansi --configuration=phpstan.neon",
+            "phpspec run --no-coverage --no-ansi --no-interaction --format=dot"
         ],
         "uninstall": [
             "rm -rf ./bin",

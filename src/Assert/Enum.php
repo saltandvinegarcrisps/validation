@@ -7,15 +7,12 @@ use Validation\Contracts\Constraint;
 
 class Enum extends Assertion implements Constraint
 {
-    /**
-     * @var string
-     */
-    protected $message;
+    protected string $message;
 
     /**
      * @var array<string>
      */
-    protected $values;
+    protected array $values;
 
     /**
      * @param array<string> $values

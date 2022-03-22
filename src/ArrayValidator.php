@@ -8,10 +8,7 @@ use UnexpectedValueException;
 
 class ArrayValidator
 {
-    /**
-     * @var array
-     */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * Get the constraints
@@ -42,8 +39,8 @@ class ArrayValidator
     /**
      * Add a single constraint to a attribute
      *
-     * @param string
-     * @param Contracts\Constraint|Closure
+     * @param string $attribute
+     * @param mixed $constraint
      */
     public function addConstraint(string $attribute, $constraint): void
     {
@@ -57,10 +54,6 @@ class ArrayValidator
 
     /**
      * Validate a payload
-     *
-     * @param array
-     * @param  Violations|null
-     * @return Violations
      */
     public function validate(array $payload, Violations $violations = null): Violations
     {
@@ -78,6 +71,8 @@ class ArrayValidator
     /**
      * Resolve constraints against a value to return an array of failures
      *
+     * @param mixed $value
+     * @param array $constraints
      * @return array<Contracts\ConstraintMessage>
      */
     protected function resolveConstraints($value, array $constraints): array
