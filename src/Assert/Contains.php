@@ -7,6 +7,10 @@ use Validation\Contracts\Constraint;
 
 class Contains extends Assertion implements Constraint
 {
+    protected string $message = ':attribute must be an array';
+
+    protected bool $validated = false;
+
     protected Constraint $constraint;
 
     public function __construct(Constraint $constraint)
@@ -16,12 +20,17 @@ class Contains extends Assertion implements Constraint
 
     public function getMessage(string $attribute): string
     {
+        if (!$this->validated) {
+            return parent::getMessage($attribute);
+        }
         return $this->constraint->getMessage($attribute);
     }
 
     public function isValid($values): bool
     {
-        if (!is_array($values) || !count($values)) {
+        $this->validated = is_array($values) && count($values) > 0;
+
+        if (!$this->validated) {
             return false;
         }
 
