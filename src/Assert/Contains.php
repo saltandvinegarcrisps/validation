@@ -32,7 +32,6 @@ class Contains extends Assertion implements Constraint
      */
     protected function validate($values): array
     {
-        vaR_dump($values);
         if (is_array($values) && count($values) > 0) {
             $this->validated = true;
             return $values;
