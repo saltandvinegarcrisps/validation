@@ -10,12 +10,12 @@ class Enum extends Assertion implements Constraint
     protected string $message;
 
     /**
-     * @var array<string>
+     * @var array<int|string, int|string>
      */
     protected array $values;
 
     /**
-     * @param array<string> $values
+     * @param array<int|string, int|string> $values
      */
     public function __construct(array $values)
     {
